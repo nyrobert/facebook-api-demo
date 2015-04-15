@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Facebook API demo</title>
+	<script src="{{ baseUrl() }}/bower_components/jquery/dist/jquery.min.js"></script>
+	<link href="{{ baseUrl() }}/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="{{ baseUrl() }}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script>
+		var config = {
+			appId: '{{ appId }}'
+		};
+	</script>
+</head>
+<body>
+	<div id="fb-root"></div>
+	<script src="{{ baseUrl() }}/js/app.js"></script>
+	<div class="container">
+		<div class="page-header">
+			<h1>Facebook API demo <small>v2</small></h1>
+		</div>
+
+		{% include 'widgets/actions.html.twig' %}
+
+		{% block content %}{% endblock %}
+
+		{% include 'widgets/register.html.twig' %}
+		{% include 'widgets/sign_in.html.twig' %}
+	</div>
+</body>
+</html>

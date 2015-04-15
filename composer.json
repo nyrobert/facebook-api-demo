@@ -1,0 +1,13 @@
+{
+	"autoload": {
+		"psr-4": {"Demo\\": "src/"}
+	},
+	"require": {
+		"slim/slim": "2.*",
+		"aura/sql": "~2.4",
+		"aura/sqlquery": "~2.4",
+		"twig/twig": "~1.0",
+		"slim/views": "0.1.*",
+		"vlucas/phpdotenv": "~1.1"
+	}
+}
