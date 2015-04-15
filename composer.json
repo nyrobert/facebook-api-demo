@@ -7,7 +7,6 @@
 		"aura/sql": "~2.4",
 		"aura/sqlquery": "~2.4",
 		"twig/twig": "~1.0",
-		"slim/views": "0.1.*",
-		"vlucas/phpdotenv": "~1.1"
+		"slim/views": "0.1.*"
 	}
 }

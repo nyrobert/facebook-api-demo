@@ -9,11 +9,6 @@ use Demo\Helper\Session;
 
 Session::getInstance()->start();
 
-Dotenv::load(__DIR__);
-Dotenv::required([
-	'FACEBOOK_APP_ID', 'FACEBOOK_APP_SECRET', 'MYSQL_HOST', 'MYSQL_USERNAME', 'MYSQL_PASSWORD'
-]);
-
 $view = new \Slim\Views\Twig();
 $view->parserExtensions = [new \Slim\Views\TwigExtension()];
 
