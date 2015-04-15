@@ -12,7 +12,14 @@
 							<br>
 							<br>
 							<br>
-							<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div>
+							<div
+								class="fb-login-button"
+								data-max-rows="1"
+								data-size="xlarge"
+								data-show-faces="false"
+								data-auto-logout-link="false"
+								scope="public_profile,email"
+								onlogin="checkLoginState();"></div>
 						</div>
 						<div class="col-md-6">
 							<form method="post" class="sign-in" action="{{ urlFor('signIn') }}">

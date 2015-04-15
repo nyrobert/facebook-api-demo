@@ -1,15 +1,6 @@
 /* jshint browser:true, jquery:true */
-/* global config, FB */
 $(function() {
 	'use strict';
-
-	window.fbAsyncInit = function() {
-		FB.init({
-			appId:   config.appId,
-			xfbml:   true,
-			version: 'v2.3'
-		});
-	};
 
 	var signInOverlay = $('.sign-in-modal');
 	signInOverlay.find('button.btn-sign-in').on('click', function(event) {
@@ -89,13 +80,4 @@ $(function() {
 			}
 		});
 	});
-
-	(function(d, s, id) {
-		var js;
-		var fjs = d.getElementsByTagName(s)[0];
-		if (d.getElementById(id)) {return;}
-		js = d.createElement(s); js.id = id;
-		js.src = '//connect.facebook.net/en_US/sdk.js';
-		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
 });
