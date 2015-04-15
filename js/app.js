@@ -12,7 +12,7 @@ $(function() {
 	};
 
 	var signInOverlay = $('.sign-in-modal');
-	signInOverlay.find('button.btn-primary').on('click', function(event) {
+	signInOverlay.find('button.btn-sign-in').on('click', function(event) {
 		event.preventDefault();
 		event.stopPropagation();
 
@@ -41,7 +41,7 @@ $(function() {
 	});
 
 	var registerOverlay = $('.register-modal');
-	registerOverlay.find('button').on('click', function(event) {
+	registerOverlay.find('button.btn-register').on('click', function(event) {
 		event.preventDefault();
 		event.stopPropagation();
 
@@ -73,7 +73,7 @@ $(function() {
 		});
 	});
 
-	var signOutButton = $('button.sign-out');
+	var signOutButton = $('button.btn-sign-out');
 	signOutButton.on('click', function(event) {
 		event.preventDefault();
 		event.stopPropagation();
