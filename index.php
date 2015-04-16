@@ -60,4 +60,14 @@ $app->post('/sign-out', function () use ($app, $userManager) {
 	}
 })->name('signOut');
 
+$app->post('/facebook-connect', function () use ($app, $userManager) {
+	$responseHelper = new ResponseHelper($app);
+
+	try {
+		$responseHelper->setJsonSuccessResponse();
+	} catch (\Exception $e) {
+		$responseHelper->setJsonErrorResponse($e);
+	}
+})->name('facebookConnect');
+
 $app->run();

@@ -2,39 +2,8 @@
 
 namespace Demo\User;
 
-use Aura\Sql\ExtendedPdo;
-use Aura\SqlQuery\QueryFactory;
-
-class Dao
+class Dao extends \Demo\Dao
 {
-	/**
-	 * @var ExtendedPdo
-	 */
-	private $pdo;
-
-	/**
-	 * @var QueryFactory
-	 */
-	private $queryFactory;
-
-	public function __construct(ExtendedPdo $pdo, QueryFactory $queryFactory)
-	{
-		$this->pdo          = $pdo;
-		$this->queryFactory = $queryFactory;
-	}
-
-	public static function create()
-	{
-		return new self(
-			new ExtendedPdo(
-				'mysql:host='.getenv('MYSQL_HOST').';dbname=facebook_api_demo',
-				getenv('MYSQL_USERNAME'),
-				getenv('MYSQL_PASSWORD')
-			),
-			new QueryFactory('mysql')
-		);
-	}
-
 	public function register($email, $password)
 	{
 		$insert = $this->queryFactory->newInsert();

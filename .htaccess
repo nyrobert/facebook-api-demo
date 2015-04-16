@@ -5,3 +5,5 @@ DirectoryIndex index.php
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^ index.php [QSA,L]
 </IfModule>
+
+SetEnv DB_NAME facebook_api_demo
