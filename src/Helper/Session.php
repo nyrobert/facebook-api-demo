@@ -21,6 +21,11 @@ class Session
 		session_start();
 	}
 
+	public function reGenerateId()
+	{
+		session_regenerate_id(true);
+	}
+
 	public function get($key)
 	{
 		if (isset($_SESSION[$key])) {
@@ -43,6 +48,7 @@ class Session
 
 	public function destroy()
 	{
+		$_SESSION = array();
 		setcookie(session_name(), '', time() - 3600, '/', null, null, true);
 		session_destroy();
 	}

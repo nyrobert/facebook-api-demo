@@ -43,6 +43,7 @@ class Manager
 			throw new \LogicException('Invalid email or password!');
 		}
 
+		$this->session->reGenerateId();
 		$this->session->set('user', Data::create($user['id'], $user['email']));
 	}
 
