@@ -4,6 +4,9 @@ namespace Demo\Helper;
 
 class Session
 {
+	/**
+	 * @var Session
+	 */
 	private static $instance;
 
 	public static function getInstance()
