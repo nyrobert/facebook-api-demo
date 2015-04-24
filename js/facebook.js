@@ -42,7 +42,6 @@ $(function() {
 	window.fbAsyncInit = function() {
 		FB.init({
 			appId:   config.appId,
-			xfbml:   true,
 			version: 'v2.3'
 		});
 
