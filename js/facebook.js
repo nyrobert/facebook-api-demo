@@ -1,5 +1,5 @@
 /* jshint browser:true, jquery:true */
-/* global config, FB */
+/* global config */
 $(function() {
 	'use strict';
 
@@ -18,6 +18,8 @@ $(function() {
 		} else {
 			document.getElementById('status').innerHTML = 'Please log into Facebook.';
 		}
+
+		$('.sign-in-modal').modal('hide');
 	}
 
 	$('button.btn-facebook-login').on('click', function(event) {
