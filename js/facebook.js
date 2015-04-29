@@ -1,7 +1,31 @@
 /* jshint browser: true, jquery: true, devel: true */
 /* global define, FB, config */
-define(['facebooksdk', 'login'], function(FB) {
+define(['facebooksdk', 'login'], function(FB, login) {
 	'use strict';
+
+	var loginButton = $('button.btn-facebook-login');
+
+	function init() {
+		FB.init({
+			appId:   config.appId,
+			version: 'v2.3'
+		});
+
+		FB.getLoginStatus(function(response) {
+			statusChangeCallback(response);
+		});
+
+		loginButton.on('click', connect);
+	}
+
+	function connect(event) {
+		event.preventDefault();
+		event.stopPropagation();
+
+		FB.login(function(response) {
+			statusChangeCallback(response);
+		});
+	}
 
 	function statusChangeCallback(response) {
 		console.log('statusChangeCallback');
@@ -19,17 +43,8 @@ define(['facebooksdk', 'login'], function(FB) {
 			document.getElementById('status').innerHTML = 'Please log into Facebook.';
 		}
 
-		$('.sign-in-modal').modal('hide');
+		login.hide();
 	}
-
-	$('button.btn-facebook-login').on('click', function(event) {
-		event.preventDefault();
-		event.stopPropagation();
-
-		FB.login(function(response) {
-			statusChangeCallback(response);
-		}, {scope: 'public_profile,email'});
-	});
 
 	function testAPI() {
 		console.log('Welcome!  Fetching your information.... ');
@@ -41,12 +56,7 @@ define(['facebooksdk', 'login'], function(FB) {
 		});
 	}
 
-	FB.init({
-		appId:   config.appId,
-		version: 'v2.3'
-	});
-
-	FB.getLoginStatus(function(response) {
-		statusChangeCallback(response);
-	});
+	return {
+		init: init
+	};
 });
