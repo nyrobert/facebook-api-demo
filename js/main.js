@@ -16,5 +16,9 @@ require.config({
 	}
 });
 
-require(['register', 'login', 'facebook'], function() {
+require(['register', 'login', 'facebook'], function(register, login, facebook) {
+	'use strict';
+
+	register.init();
+	login.init();
 });

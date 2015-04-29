@@ -4,12 +4,16 @@ define(['jquery', 'bootstrap'], function($) {
 	'use strict';
 
 	var registerOverlay = $('.register-modal');
-	registerOverlay.find('button.btn-register').on('click', function(event) {
+	var email           = $('#register-email');
+	var password        = $('#register-password');
+
+	function init() {
+		registerOverlay.find('button.btn-register').on('click', send);
+	}
+
+	function send(event) {
 		event.preventDefault();
 		event.stopPropagation();
-
-		var email    = $('#register-email');
-		var password = $('#register-password');
 
 		if (!email.val() || !password.val()) {
 			return;
@@ -25,14 +29,22 @@ define(['jquery', 'bootstrap'], function($) {
 			}
 		}).done(function(data) {
 			if (data.success) {
-				email.val('');
-				password.val('');
-				registerOverlay.modal('hide');
-
-				alert('Success!');
+				success();
 			} else {
 				alert(data.errorMessage);
 			}
 		});
-	});
+	}
+
+	function success() {
+		email.val('');
+		password.val('');
+		registerOverlay.modal('hide');
+
+		alert('Success!');
+	}
+
+	return {
+		init: init
+	};
 });

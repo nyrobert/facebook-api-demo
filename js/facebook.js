@@ -1,6 +1,6 @@
 /* jshint browser: true, jquery: true, devel: true */
 /* global define, FB, config */
-define(['facebooksdk', 'login'], function($) {
+define(['facebooksdk', 'login'], function(FB) {
 	'use strict';
 
 	function statusChangeCallback(response) {

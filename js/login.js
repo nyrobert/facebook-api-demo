@@ -4,12 +4,17 @@ define(['jquery', 'bootstrap'], function($) {
 	'use strict';
 
 	var signInOverlay = $('.sign-in-modal');
-	signInOverlay.find('button.btn-sign-in').on('click', function(event) {
-		event.preventDefault();
-		event.stopPropagation();
+	var signOutButton = $('button.btn-sign-out');
+	var email         = $('#sign-in-email');
+	var password      = $('#sign-in-password');
 
-		var email    = $('#sign-in-email');
-		var password = $('#sign-in-password');
+	function init() {
+		signInOverlay.find('button.btn-sign-in').on('click', login);
+		signOutButton.on('click', logout);
+	}
+
+	function login(event) {
+		stopEvent(event);
 
 		if (!email.val() || !password.val()) {
 			return;
@@ -25,27 +30,42 @@ define(['jquery', 'bootstrap'], function($) {
 			}
 		}).done(function(data) {
 			if (data.success) {
-				location.reload();
+				success();
 			} else {
-				alert(data.errorMessage);
+				failure(data.errorMessage);
 			}
 		});
-	});
+	}
 
-	var signOutButton = $('button.btn-sign-out');
-	signOutButton.on('click', function(event) {
-		event.preventDefault();
-		event.stopPropagation();
+	function logout(event) {
+		stopEvent(event);
 
 		$.ajax({
 			url:  signOutButton.attr('data-action'),
 			type: 'POST'
 		}).done(function(data) {
 			if (data.success) {
-				location.reload();
+				success();
 			} else {
-				alert(data.errorMessage);
+				failure(data.errorMessage);
 			}
 		});
-	});
+	}
+
+	function stopEvent(event) {
+		event.preventDefault();
+		event.stopPropagation();
+	}
+
+	function success() {
+		location.reload();
+	}
+
+	function failure(errorMessage) {
+		alert(errorMessage);
+	}
+
+	return {
+		init: init
+	};
 });
