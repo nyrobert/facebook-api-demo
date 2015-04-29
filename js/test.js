@@ -1,6 +1,6 @@
-/* jshint browser:true, jquery:true */
-/* global require */
-require(['jquery', 'bootstrap'], function($){
+/* jshint browser: true, jquery: true, devel: true */
+/* global define */
+define(['jquery', 'bootstrap'], function($){
 	'use strict';
 
 	console.log('test module loaded');
