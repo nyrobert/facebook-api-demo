@@ -2,22 +2,22 @@
 	<div class="panel panel-info">
 		<div class="panel-body">
 			<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGRlZnMvPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjEzLjQ2ODc1IiB5PSIzMiIgc3R5bGU9ImZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjY0eDY0PC90ZXh0PjwvZz48L3N2Zz4=" data-holder-rendered="true" style="width: 64px; height: 64px;">
-			<span>Signed in as <strong>{{ user.email }}</strong></span>
+			<span>Logged in as <strong>{{ user.email }}</strong></span>
 		</div>
 		<div class="panel-footer">
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".edit-post-modal">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Connect with Facebook
 			</button>
-			<button type="button" class="btn btn-success btn-sign-out" data-action="{{ urlFor('signOut') }}">
-				<span class="glyphicon glyphicon-off" aria-hidden="true"></span> Sign out
+			<button type="button" class="btn btn-success btn-logout" data-action="{{ urlFor('logout') }}">
+				<span class="glyphicon glyphicon-off" aria-hidden="true"></span> Logout
 			</button>
 		</div>
 	</div>
 {% else %}
 	<div class="panel panel-info">
 		<div class="panel-footer">
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".sign-in-modal">
-				<span class="glyphicon glyphicon-user" aria-hidden="true"></span> Sign in
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".login-modal">
+				<span class="glyphicon glyphicon-user" aria-hidden="true"></span> Login
 			</button>
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".register-modal">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Register

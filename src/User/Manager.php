@@ -35,7 +35,7 @@ class Manager
 		$this->dao->register($email, password_hash($password, PASSWORD_DEFAULT));
 	}
 
-	public function signIn($email, $password)
+	public function login($email, $password)
 	{
 		$user = $this->dao->getByEmail($email);
 
@@ -47,7 +47,7 @@ class Manager
 		$this->session->set('user', Data::create($user['id'], $user['email']));
 	}
 
-	public function signOut()
+	public function logout()
 	{
 		$this->session->destroy();
 	}

@@ -3,14 +3,14 @@
 define(['jquery', 'bootstrap'], function($) {
 	'use strict';
 
-	var signInOverlay = $('.sign-in-modal');
-	var signOutButton = $('button.btn-sign-out');
-	var email         = $('#sign-in-email');
-	var password      = $('#sign-in-password');
+	var loginOverlay = $('.login-modal');
+	var logoutButton = $('button.btn-logout');
+	var email         = $('#login-email');
+	var password      = $('#login-password');
 
 	function init() {
-		signInOverlay.find('button.btn-sign-in').on('click', login);
-		signOutButton.on('click', logout);
+		loginOverlay.find('button.btn-login').on('click', login);
+		logoutButton.on('click', logout);
 	}
 
 	function login(event) {
@@ -21,7 +21,7 @@ define(['jquery', 'bootstrap'], function($) {
 		}
 
 		$.ajax({
-			url:      signInOverlay.find('form.sign-in').attr('action'),
+			url:      loginOverlay.find('form.login').attr('action'),
 			type:     'POST',
 			dataType: 'json',
 			data: {
@@ -41,7 +41,7 @@ define(['jquery', 'bootstrap'], function($) {
 		stopEvent(event);
 
 		$.ajax({
-			url:  signOutButton.attr('data-action'),
+			url:  logoutButton.attr('data-action'),
 			type: 'POST'
 		}).done(function(data) {
 			if (data.success) {
@@ -53,7 +53,7 @@ define(['jquery', 'bootstrap'], function($) {
 	}
 
 	function hide() {
-		signInOverlay.modal('hide');
+		loginOverlay.modal('hide');
 	}
 
 	function stopEvent(event) {

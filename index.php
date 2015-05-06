@@ -35,30 +35,30 @@ $app->post('/register', function () use ($app, $userManager) {
 	}
 })->name('register');
 
-$app->post('/sign-in', function () use ($app, $userManager) {
+$app->post('/login', function () use ($app, $userManager) {
 	$requestHelper  = new RequestHelper();
 	$responseHelper = new ResponseHelper($app);
 
 	try {
-		$userManager->signIn($requestHelper->getEmail(), $requestHelper->getPassword());
+		$userManager->login($requestHelper->getEmail(), $requestHelper->getPassword());
 
 		$responseHelper->setJsonSuccessResponse();
 	} catch (\Exception $e) {
 		$responseHelper->setJsonErrorResponse($e);
 	}
-})->name('signIn');
+})->name('login');
 
-$app->post('/sign-out', function () use ($app, $userManager) {
+$app->post('/logout', function () use ($app, $userManager) {
 	$responseHelper = new ResponseHelper($app);
 
 	try {
-		$userManager->signOut();
+		$userManager->logout();
 
 		$responseHelper->setJsonSuccessResponse();
 	} catch (\Exception $e) {
 		$responseHelper->setJsonErrorResponse($e);
 	}
-})->name('signOut');
+})->name('logout');
 
 $app->post('/facebook-connect', function () use ($app, $userManager) {
 	$responseHelper = new ResponseHelper($app);

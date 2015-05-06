@@ -8,10 +8,11 @@ define(['jquery', 'bootstrap'], function($) {
 	var password        = $('#register-password');
 
 	function init() {
-		registerOverlay.find('button.btn-register').on('click', send);
+		registerOverlay.find('button.btn-register').on('click', register);
 	}
 
-	function send(event) {
+	function register(event) {
+		alert('aaaaa');
 		event.preventDefault();
 		event.stopPropagation();
 
