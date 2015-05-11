@@ -12,7 +12,6 @@ define(['jquery', 'bootstrap'], function($) {
 	}
 
 	function register(event) {
-		alert('aaaaa');
 		event.preventDefault();
 		event.stopPropagation();
 

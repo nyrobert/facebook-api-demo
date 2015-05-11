@@ -5,8 +5,8 @@ define(['jquery', 'bootstrap'], function($) {
 
 	var loginOverlay = $('.login-modal');
 	var logoutButton = $('button.btn-logout');
-	var email         = $('#login-email');
-	var password      = $('#login-password');
+	var email        = $('#login-email');
+	var password     = $('#login-password');
 
 	function init() {
 		loginOverlay.find('button.btn-login').on('click', login);
