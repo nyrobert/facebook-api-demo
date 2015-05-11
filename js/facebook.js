@@ -1,6 +1,6 @@
 /* jshint browser: true, jquery: true, devel: true */
 /* global define, FB, config */
-define(['facebooksdk', 'login'], function(FB, login) {
+define(['jquery', 'facebooksdk', 'login'], function($, FB, login) {
 	'use strict';
 
 	var loginButton = $('button.btn-facebook-login');
@@ -8,11 +8,8 @@ define(['facebooksdk', 'login'], function(FB, login) {
 	function init() {
 		FB.init({
 			appId:   config.appId,
+			cookie:  true,
 			version: 'v2.3'
-		});
-
-		FB.getLoginStatus(function(response) {
-			statusChangeCallback(response);
 		});
 
 		loginButton.on('click', connect);
@@ -23,37 +20,35 @@ define(['facebooksdk', 'login'], function(FB, login) {
 		event.stopPropagation();
 
 		FB.login(function(response) {
-			statusChangeCallback(response);
-		});
+			loginCallback(response);
+		}, {scope: 'public_profile,email'});
 	}
 
-	function statusChangeCallback(response) {
-		console.log('statusChangeCallback');
-		console.log(response);
-
+	function loginCallback(response) {
 		if (response.status === 'connected') {
-			// send response.authResponse.accessToken to the server
-			// send response.authResponse.userID to the server
-			// long lived token needed! re-verify needed on the server (with app_id and user_id)
-
-			testAPI();
+			$.ajax({
+				url:  loginButton.attr('data-connect-url'),
+				type: 'POST'
+			}).done(function(data) {
+				if (data.success) {
+					success();
+				} else {
+					failure(data.errorMessage);
+				}
+			});
 		} else if (response.status === 'not_authorized') {
-			document.getElementById('status').innerHTML = 'Please log into this app.';
+			failure('Please log into this app.');
 		} else {
-			document.getElementById('status').innerHTML = 'Please log into Facebook.';
+			failure('Please log into Facebook.');
 		}
+	}
 
+	function success() {
 		login.hide();
 	}
 
-	function testAPI() {
-		console.log('Welcome!  Fetching your information.... ');
-
-		FB.api('/me', function(response) {
-			console.log('Successful login for: ' + response.name);
-			document.getElementById('status').innerHTML =
-				'Thanks for logging in, ' + response.name + '!';
-		});
+	function failure(errorMessage) {
+		alert(errorMessage);
 	}
 
 	return {

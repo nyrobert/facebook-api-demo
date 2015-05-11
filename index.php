@@ -3,11 +3,17 @@
 require 'vendor/autoload.php';
 
 use Demo\User\Manager as UserManager;
+use Demo\User\Facebook\Manager as FacebookManager;
 use Demo\Helper\Request as RequestHelper;
 use Demo\Helper\Response as ResponseHelper;
 use Demo\Helper\Session;
+use Facebook\FacebookSession;
 
 Session::getInstance()->start();
+
+FacebookSession::setDefaultApplication(
+	getenv('FACEBOOK_APP_ID'), getenv('FACEBOOK_APP_SECRET')
+);
 
 $view = new \Slim\Views\Twig();
 $view->parserExtensions = [new \Slim\Views\TwigExtension()];
@@ -61,9 +67,27 @@ $app->post('/logout', function () use ($app, $userManager) {
 })->name('logout');
 
 $app->post('/facebook/connect', function () use ($app, $userManager) {
-	$responseHelper = new ResponseHelper($app);
+	/**
+	 * collect user info
+	 * 	facebook user id
+	 * 	email
+	 * search user by email
+	 * 	already registered user
+	 * 		get long-term token
+	 * 		insert or update facebook record
+	 * 	new user
+	 * 		get long-term token
+	 * 		create new user
+	 * 		generate password
+	 * 		insert facebook record
+	 */
+
+	$responseHelper  = new ResponseHelper($app);
+	$facebookManager = FacebookManager::create();
 
 	try {
+		$facebookManager->connect();
+
 		$responseHelper->setJsonSuccessResponse();
 	} catch (\Exception $e) {
 		$responseHelper->setJsonErrorResponse($e);
