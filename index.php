@@ -60,7 +60,7 @@ $app->post('/logout', function () use ($app, $userManager) {
 	}
 })->name('logout');
 
-$app->post('/facebook-connect', function () use ($app, $userManager) {
+$app->post('/facebook/connect', function () use ($app, $userManager) {
 	$responseHelper = new ResponseHelper($app);
 
 	try {
