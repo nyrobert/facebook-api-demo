@@ -14,6 +14,13 @@ class Response
 		$this->app = $app;
 	}
 
+	public static function create()
+	{
+		return new self(
+			\Slim\Slim::getInstance()
+		);
+	}
+
 	public function setJsonSuccessResponse()
 	{
 		$this->app->response->headers->set('Content-Type', 'application/json');

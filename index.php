@@ -26,9 +26,9 @@ $app->get('/', function () use ($app, $userManager) {
 	);
 })->name('index');
 
-$app->post('/register', function () use ($app, $userManager) {
+$app->post('/register', function () use ($userManager) {
 	$requestHelper  = new RequestHelper();
-	$responseHelper = new ResponseHelper($app);
+	$responseHelper = ResponseHelper::create();
 
 	try {
 		$userManager->register($requestHelper->getEmail(), $requestHelper->getPassword());
@@ -39,9 +39,9 @@ $app->post('/register', function () use ($app, $userManager) {
 	}
 })->name('register');
 
-$app->post('/login', function () use ($app, $userManager) {
+$app->post('/login', function () use ($userManager) {
 	$requestHelper  = new RequestHelper();
-	$responseHelper = new ResponseHelper($app);
+	$responseHelper = ResponseHelper::create();
 
 	try {
 		$userManager->login($requestHelper->getEmail(), $requestHelper->getPassword());
@@ -52,8 +52,8 @@ $app->post('/login', function () use ($app, $userManager) {
 	}
 })->name('login');
 
-$app->post('/logout', function () use ($app, $userManager) {
-	$responseHelper = new ResponseHelper($app);
+$app->post('/logout', function () use ($userManager) {
+	$responseHelper = ResponseHelper::create();
 
 	try {
 		$userManager->logout();
@@ -64,8 +64,8 @@ $app->post('/logout', function () use ($app, $userManager) {
 	}
 })->name('logout');
 
-$app->post('/facebook/connect', function () use ($app, $userManager) {
-	$responseHelper  = new ResponseHelper($app);
+$app->post('/facebook/connect', function () {
+	$responseHelper  = ResponseHelper::create();
 	$facebookManager = FacebookManager::create();
 
 	try {
