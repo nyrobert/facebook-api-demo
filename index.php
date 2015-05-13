@@ -3,11 +3,11 @@
 require 'vendor/autoload.php';
 
 use Demo\User\Manager as UserManager;
-use Demo\User\Facebook\Manager as FacebookManager;
+use Demo\Facebook\Connect as FacebookConnect;
 use Demo\Helper\Request as RequestHelper;
 use Demo\Helper\Response as ResponseHelper;
 
-\Demo\Helper\Session::getInstance()->start();
+(new \Demo\Helper\Session())->start();
 
 \Facebook\FacebookSession::setDefaultApplication(
 	getenv('FACEBOOK_APP_ID'), getenv('FACEBOOK_APP_SECRET')
@@ -19,10 +19,13 @@ $view->parserExtensions = [new \Slim\Views\TwigExtension()];
 $app         = new \Slim\Slim(['view' => $view]);
 $userManager = UserManager::create();
 
-$app->get('/', function () use ($app, $userManager) {
+$app->get('/', function () use ($app) {
 	$app->render(
 		'index.html.twig',
-		['appId' => getenv('FACEBOOK_APP_ID'), 'user' => $userManager->get()]
+		[
+			'appId' => getenv('FACEBOOK_APP_ID'),
+			'user'  => (new \Demo\User\Session\Handler())->getData()
+		]
 	);
 })->name('index');
 
@@ -66,7 +69,7 @@ $app->post('/logout', function () use ($userManager) {
 
 $app->post('/facebook/connect', function () {
 	$responseHelper  = ResponseHelper::create();
-	$facebookManager = FacebookManager::create();
+	$facebookManager = FacebookConnect::create();
 
 	try {
 		$facebookManager->connect();

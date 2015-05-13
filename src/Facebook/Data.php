@@ -1,6 +1,6 @@
 <?php
 
-namespace Demo\User\Facebook;
+namespace Demo\Facebook;
 
 use Facebook\FacebookSession;
 use Facebook\GraphUser;

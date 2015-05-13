@@ -4,19 +4,6 @@ namespace Demo\Helper;
 
 class Session
 {
-	/**
-	 * @var Session
-	 */
-	private static $instance;
-
-	public static function getInstance()
-	{
-		if (self::$instance === null) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	public function start()
 	{
 		ini_set('session.cookie_httponly', '1');

@@ -1,6 +1,6 @@
 <?php
 
-namespace Demo\User\Facebook;
+namespace Demo\Facebook;
 
 use Demo\User\Manager as UserManager;
 use Facebook\FacebookJavaScriptLoginHelper;
@@ -8,7 +8,7 @@ use Facebook\FacebookRequest;
 use Facebook\FacebookSession;
 use Facebook\GraphUser;
 
-class Manager
+class Connect
 {
 	/**
 	 * @var Dao
@@ -52,14 +52,14 @@ class Manager
 		$user = $this->userManager->getByEmail($data->email);
 
 		if (!$user) {
-			$userId = $this->userManager->register($data->email, $this->userManager->generatePassword());
+			$userId = $this->userManager->registerWithFacebook($data->email);
 			$email  = $data->email;
 		} else {
-			$userId = $user['id'];
-			$email  = $user['email'];
+			$userId = $user->id;
+			$email  = $user->email;
 		}
 
-		$this->userManager->setSessionData($userId, $email, $data->picture);
+		$this->userManager->loginWithFacebook($userId, $email, $data->picture);
 	}
 
 	private function getSession()

@@ -15,16 +15,16 @@ class Data
 	public $email;
 
 	/**
-	 * @var string
+	 * @var string password hash
 	 */
-	public $picture;
+	public $password;
 
-	public static function create($id, $email, $picture = null)
+	public static function create($data)
 	{
-		$object          = new self();
-		$object->id      = (int) $id;
-		$object->email   = $email;
-		$object->picture = $picture;
+		$object           = new self();
+		$object->id       = (int) $data['id'];
+		$object->email    = $data['email'];
+		$object->password = $data['password'];
 
 		return $object;
 	}

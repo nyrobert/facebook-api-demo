@@ -2,8 +2,8 @@
 
 namespace Demo\User;
 
-use Demo\Helper\Session;
-use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
+use Demo\User\Session\Handler as SessionHandler;
+use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator as PasswordGenerator;
 
 class Manager
 {
@@ -13,17 +13,17 @@ class Manager
 	private $dao;
 
 	/**
-	 * @var Session
+	 * @var SessionHandler
 	 */
 	private $session;
 
 	/**
-	 * @var ComputerPasswordGenerator
+	 * @var PasswordGenerator
 	 */
 	private $passwordGenerator;
 
 	public function __construct(
-		Dao $dao, Session $session, ComputerPasswordGenerator $passwordGenerator
+		Dao $dao, SessionHandler $session, PasswordGenerator $passwordGenerator
 	)
 	{
 		$this->dao               = $dao;
@@ -35,14 +35,14 @@ class Manager
 	{
 		return new self(
 			Dao::create(),
-			Session::getInstance(),
+			new SessionHandler(),
 			self::buildPasswordGenerator()
 		);
 	}
 
 	private static function buildPasswordGenerator()
 	{
-		return (new ComputerPasswordGenerator())
+		return (new PasswordGenerator())
 			->setUppercase()
 			->setLowercase()
 			->setNumbers()
@@ -52,34 +52,34 @@ class Manager
 
 	public function register($email, $password)
 	{
-		return $this->dao->register($email, password_hash($password, PASSWORD_DEFAULT));
+		return $this->dao->register(
+			$email, password_hash($password, PASSWORD_DEFAULT)
+		);
+	}
+
+	public function registerWithFacebook($email)
+	{
+		return $this->dao->register(
+			$email, password_hash($this->passwordGenerator->generatePassword(), PASSWORD_DEFAULT)
+		);
 	}
 
 	public function login($email, $password)
 	{
 		$user = $this->getByEmail($email);
 
-		if (!$user || !password_verify($password, $user['password'])) {
+		if (!$user || !password_verify($password, $user->password)) {
 			throw new \LogicException('Invalid email or password!');
 		}
 
-		$this->setSessionData($user['id'], $user['email']);
+		$this->session->reGenerateId();
+		$this->session->setData($user->id, $user->email);
 	}
 
-	public function setSessionData($userId, $email, $picture = null)
+	public function loginWithFacebook($userId, $email, $picture)
 	{
 		$this->session->reGenerateId();
-		$this->session->set('user', Data::create($userId, $email, $picture));
-	}
-
-	public function get()
-	{
-		return $this->session->get('user');
-	}
-
-	public function getByEmail($email)
-	{
-		return $this->dao->getByEmail($email);
+		$this->session->setData($userId, $email, $picture);
 	}
 
 	public function logout()
@@ -87,8 +87,9 @@ class Manager
 		$this->session->destroy();
 	}
 
-	public function generatePassword()
+	public function getByEmail($email)
 	{
-		return $this->passwordGenerator->generatePassword();
+		$data = $this->dao->getByEmail($email);
+		return $data ? Data::create($this->dao->getByEmail($email)) : null;
 	}
 }

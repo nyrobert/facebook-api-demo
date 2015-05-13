@@ -15,7 +15,7 @@ class Dao extends \Demo\Dao
 				'password' => $password,
 			]);
 
-		$query = $this->pdo->prepare($insert->__toString());
+		$query = $this->pdo->prepare((string) $insert);
 		$query->execute($insert->getBindValues());
 
 		return $this->pdo->lastInsertId('id');
@@ -30,6 +30,6 @@ class Dao extends \Demo\Dao
 			->from('user')
 			->where('email = :email');
 
-		return $this->pdo->fetchOne($select->__toString(), ['email' => $email]);
+		return $this->pdo->fetchOne((string) $select, ['email' => $email]);
 	}
 }
