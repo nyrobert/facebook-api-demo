@@ -14,11 +14,17 @@ class Data
 	 */
 	public $email;
 
-	public static function create($id, $email)
+	/**
+	 * @var string
+	 */
+	public $picture;
+
+	public static function create($id, $email, $picture = null)
 	{
-		$object        = new self();
-		$object->id    = (int) $id;
-		$object->email = $email;
+		$object          = new self();
+		$object->id      = (int) $id;
+		$object->email   = $email;
+		$object->picture = $picture;
 
 		return $object;
 	}

@@ -1,6 +1,6 @@
 /* jshint browser: true, jquery: true, devel: true */
 /* global define, FB, config */
-define(['jquery', 'facebooksdk', 'login'], function($, FB, login) {
+define(['jquery', 'facebooksdk'], function($, FB) {
 	'use strict';
 
 	var loginButton = $('button.btn-facebook-login');
@@ -44,7 +44,7 @@ define(['jquery', 'facebooksdk', 'login'], function($, FB, login) {
 	}
 
 	function success() {
-		login.hide();
+		location.reload();
 	}
 
 	function failure(errorMessage) {

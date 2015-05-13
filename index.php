@@ -6,12 +6,10 @@ use Demo\User\Manager as UserManager;
 use Demo\User\Facebook\Manager as FacebookManager;
 use Demo\Helper\Request as RequestHelper;
 use Demo\Helper\Response as ResponseHelper;
-use Demo\Helper\Session;
-use Facebook\FacebookSession;
 
-Session::getInstance()->start();
+\Demo\Helper\Session::getInstance()->start();
 
-FacebookSession::setDefaultApplication(
+\Facebook\FacebookSession::setDefaultApplication(
 	getenv('FACEBOOK_APP_ID'), getenv('FACEBOOK_APP_SECRET')
 );
 
@@ -67,21 +65,6 @@ $app->post('/logout', function () use ($app, $userManager) {
 })->name('logout');
 
 $app->post('/facebook/connect', function () use ($app, $userManager) {
-	/**
-	 * collect user info
-	 * 	facebook user id
-	 * 	email
-	 * search user by email
-	 * 	already registered user
-	 * 		get long-term token
-	 * 		insert or update facebook record
-	 * 	new user
-	 * 		get long-term token
-	 * 		create new user
-	 * 		generate password
-	 * 		insert facebook record
-	 */
-
 	$responseHelper  = new ResponseHelper($app);
 	$facebookManager = FacebookManager::create();
 
@@ -89,6 +72,8 @@ $app->post('/facebook/connect', function () use ($app, $userManager) {
 		$facebookManager->connect();
 
 		$responseHelper->setJsonSuccessResponse();
+	} catch (\Facebook\FacebookRequestException $e) {
+		$responseHelper->setJsonErrorResponse($e);
 	} catch (\Exception $e) {
 		$responseHelper->setJsonErrorResponse($e);
 	}

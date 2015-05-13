@@ -3,6 +3,7 @@
 namespace Demo\User;
 
 use Demo\Helper\Session;
+use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 
 class Manager
 {
@@ -16,35 +17,69 @@ class Manager
 	 */
 	private $session;
 
-	public function __construct(Dao $dao, Session $session)
+	/**
+	 * @var ComputerPasswordGenerator
+	 */
+	private $passwordGenerator;
+
+	public function __construct(
+		Dao $dao, Session $session, ComputerPasswordGenerator $passwordGenerator
+	)
 	{
-		$this->dao     = $dao;
-		$this->session = $session;
+		$this->dao               = $dao;
+		$this->session           = $session;
+		$this->passwordGenerator = $passwordGenerator;
 	}
 
 	public static function create()
 	{
 		return new self(
 			Dao::create(),
-			Session::getInstance()
+			Session::getInstance(),
+			self::buildPasswordGenerator()
 		);
+	}
+
+	private static function buildPasswordGenerator()
+	{
+		return (new ComputerPasswordGenerator())
+			->setUppercase()
+			->setLowercase()
+			->setNumbers()
+			->setSymbols(false)
+			->setLength(20);
 	}
 
 	public function register($email, $password)
 	{
-		$this->dao->register($email, password_hash($password, PASSWORD_DEFAULT));
+		return $this->dao->register($email, password_hash($password, PASSWORD_DEFAULT));
 	}
 
 	public function login($email, $password)
 	{
-		$user = $this->dao->getByEmail($email);
+		$user = $this->getByEmail($email);
 
-		if (!password_verify($password, $user['password'])) {
+		if (!$user || !password_verify($password, $user['password'])) {
 			throw new \LogicException('Invalid email or password!');
 		}
 
+		$this->setSessionData($user['id'], $user['email']);
+	}
+
+	public function setSessionData($userId, $email, $picture = null)
+	{
 		$this->session->reGenerateId();
-		$this->session->set('user', Data::create($user['id'], $user['email']));
+		$this->session->set('user', Data::create($userId, $email, $picture));
+	}
+
+	public function get()
+	{
+		return $this->session->get('user');
+	}
+
+	public function getByEmail($email)
+	{
+		return $this->dao->getByEmail($email);
 	}
 
 	public function logout()
@@ -52,8 +87,8 @@ class Manager
 		$this->session->destroy();
 	}
 
-	public function get()
+	public function generatePassword()
 	{
-		return $this->session->get('user');
+		return $this->passwordGenerator->generatePassword();
 	}
 }

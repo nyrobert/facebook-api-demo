@@ -8,11 +8,17 @@ class Dao extends \Demo\Dao
 	{
 		$insert = $this->queryFactory->newInsert();
 
-		$insert->into('user')->cols(['email', 'password']);
-		$insert->bindValues(['email' => $email, 'password' => $password]);
+		$insert
+			->into('user')
+			->cols([
+				'email'    => $email,
+				'password' => $password,
+			]);
 
 		$query = $this->pdo->prepare($insert->__toString());
 		$query->execute($insert->getBindValues());
+
+		return $this->pdo->lastInsertId('id');
 	}
 
 	public function getByEmail($email)

@@ -2,8 +2,11 @@
 
 namespace Demo\User\Facebook;
 
-use Demo\Helper\Session;
+use Demo\User\Manager as UserManager;
 use Facebook\FacebookJavaScriptLoginHelper;
+use Facebook\FacebookRequest;
+use Facebook\FacebookSession;
+use Facebook\GraphUser;
 
 class Manager
 {
@@ -13,9 +16,9 @@ class Manager
 	private $dao;
 
 	/**
-	 * @var Session
+	 * @var UserManager
 	 */
-	private $session;
+	private $userManager;
 
 	/**
 	 * @var FacebookJavaScriptLoginHelper
@@ -23,11 +26,11 @@ class Manager
 	private $loginHelper;
 
 	public function __construct(
-		Dao $dao, Session $session, FacebookJavaScriptLoginHelper $loginHelper
+		Dao $dao, UserManager $userManager, FacebookJavaScriptLoginHelper $loginHelper
 	)
 	{
 		$this->dao         = $dao;
-		$this->session     = $session;
+		$this->userManager = $userManager;
 		$this->loginHelper = $loginHelper;
 	}
 
@@ -35,15 +38,42 @@ class Manager
 	{
 		return new self(
 			Dao::create(),
-			Session::getInstance(),
+			UserManager::create(),
 			new FacebookJavaScriptLoginHelper()
 		);
 	}
 
 	public function connect()
 	{
-		$session = $this->loginHelper->getSession();
+		$session = $this->getSession();
 
-		var_dump($session);
+		$data = Data::create($session, $this->getProfile($session));
+
+		$user = $this->userManager->getByEmail($data->email);
+
+		if (!$user) {
+			$userId = $this->userManager->register($data->email, $this->userManager->generatePassword());
+			$email  = $data->email;
+		} else {
+			$userId = $user['id'];
+			$email  = $user['email'];
+		}
+
+		$this->userManager->setSessionData($userId, $email, $data->picture);
+	}
+
+	private function getSession()
+	{
+		$session = $this->loginHelper->getSession();
+		$session->validate();
+
+		return $session->getLongLivedSession();
+	}
+
+	private function getProfile(FacebookSession $session)
+	{
+		return (new FacebookRequest(
+			$session, 'GET', '/me?fields=id,email,picture{url}'
+		))->execute()->getGraphObject(GraphUser::className());
 	}
 }

@@ -8,6 +8,7 @@
 		"aura/sqlquery": "~2.4",
 		"twig/twig": "~1.0",
 		"slim/views": "0.1.*",
-		"facebook/php-sdk-v4": "4.0.*"
+		"facebook/php-sdk-v4": "4.0.*",
+		"hackzilla/password-generator": "~1.0"
 	}
 }
