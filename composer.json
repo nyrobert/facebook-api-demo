@@ -3,6 +3,7 @@
 		"psr-4": {"Demo\\": "src/"}
 	},
 	"require": {
+		"php": ">=5.4.0",
 		"slim/slim": "2.*",
 		"aura/sql": "~2.4",
 		"aura/sqlquery": "~2.4",
