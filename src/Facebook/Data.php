@@ -27,10 +27,10 @@ class Data
 	 */
 	public $picture;
 
-	public static function create(FacebookSession $session, GraphUser $profileData)
+	public static function create($accessToken, GraphUser $profileData)
 	{
 		$data = new self();
-		$data->accessToken = (string) $session->getAccessToken();
+		$data->accessToken = $accessToken;
 		$data->userId      = $profileData->getId();
 		$data->email       = $profileData->getEmail();
 		$data->picture     = $profileData->getProperty('picture')->getProperty('url');

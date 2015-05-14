@@ -7,6 +7,7 @@ use Facebook\FacebookJavaScriptLoginHelper;
 use Facebook\FacebookRequest;
 use Facebook\FacebookSession;
 use Facebook\GraphUser;
+use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator as PasswordGenerator;
 
 class Connect
 {
@@ -25,13 +26,22 @@ class Connect
 	 */
 	private $loginHelper;
 
+	/**
+	 * @var PasswordGenerator
+	 */
+	private $passwordGenerator;
+
 	public function __construct(
-		Dao $dao, UserManager $userManager, FacebookJavaScriptLoginHelper $loginHelper
+		Dao $dao,
+		UserManager $userManager,
+		FacebookJavaScriptLoginHelper $loginHelper,
+		PasswordGenerator $passwordGenerator
 	)
 	{
-		$this->dao         = $dao;
-		$this->userManager = $userManager;
-		$this->loginHelper = $loginHelper;
+		$this->dao               = $dao;
+		$this->userManager       = $userManager;
+		$this->loginHelper       = $loginHelper;
+		$this->passwordGenerator = $passwordGenerator;
 	}
 
 	public static function create()
@@ -39,27 +49,40 @@ class Connect
 		return new self(
 			Dao::create(),
 			UserManager::create(),
-			new FacebookJavaScriptLoginHelper()
+			new FacebookJavaScriptLoginHelper(),
+			self::buildPasswordGenerator()
 		);
+	}
+
+	private static function buildPasswordGenerator()
+	{
+		return (new PasswordGenerator())
+			->setUppercase()
+			->setLowercase()
+			->setNumbers()
+			->setSymbols(false)
+			->setLength(20);
 	}
 
 	public function connect()
 	{
 		$session = $this->getSession();
 
-		$data = Data::create($session, $this->getProfile($session));
+		$data = Data::create((string) $session->getAccessToken(), $this->getProfile($session));
 
 		$user = $this->userManager->getByEmail($data->email);
 
 		if (!$user) {
-			$userId = $this->userManager->registerWithFacebook($data->email);
+			$userId = $this->userManager->register(
+				$data->email, $this->passwordGenerator->generatePassword()
+			);
 			$email  = $data->email;
 		} else {
 			$userId = $user->id;
 			$email  = $user->email;
 		}
 
-		$this->userManager->loginWithFacebook($userId, $email, $data->picture);
+		$this->userManager->saveLogin($userId, $email, $data->picture);
 	}
 
 	private function getSession()
