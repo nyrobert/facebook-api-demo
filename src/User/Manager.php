@@ -45,10 +45,10 @@ class Manager
 			throw new \LogicException('Invalid email or password!');
 		}
 
-		$this->saveLogin($user->id, $user->email);
+		$this->loginCallback($user->id, $user->email);
 	}
 
-	public function saveLogin($userId, $email, $picture = null)
+	public function loginCallback($userId, $email, $picture = null)
 	{
 		$this->session->reGenerateId();
 		$this->session->setData($userId, $email, $picture);

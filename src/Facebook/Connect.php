@@ -82,7 +82,7 @@ class Connect
 			$email  = $user->email;
 		}
 
-		$this->userManager->saveLogin($userId, $email, $data->picture);
+		$this->userManager->loginCallback($userId, $email, $data->picture);
 	}
 
 	private function getSession()
