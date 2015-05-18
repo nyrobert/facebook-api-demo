@@ -82,6 +82,8 @@ class Connect
 			$email  = $user->email;
 		}
 
+		$this->dao->save($userId, $data);
+
 		$this->userManager->loginCallback($userId, $email, $data->picture);
 	}
 
