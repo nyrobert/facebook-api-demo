@@ -48,10 +48,8 @@ class Api
 			$session = (new FacebookJavaScriptLoginHelper())->getSession();
 			$session->validate();
 
-			$longLivedAccessToken = $session->getAccessToken()->extend();
-
 			self::$session = new FacebookSession(
-				$longLivedAccessToken, $session->getSignedRequest()
+				$session->getAccessToken()->extend(), $session->getSignedRequest()
 			);
 		}
 		return self::$session;
