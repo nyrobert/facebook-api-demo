@@ -9,11 +9,17 @@ class Response
 	 */
 	private $app;
 
+	/**
+	 * @param \Slim\Slim $app
+	 */
 	public function __construct(\Slim\Slim $app)
 	{
 		$this->app = $app;
 	}
 
+	/**
+	 * @return Response
+	 */
 	public static function create()
 	{
 		return new self(

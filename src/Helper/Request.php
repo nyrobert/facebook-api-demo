@@ -4,11 +4,19 @@ namespace Demo\Helper;
 
 class Request
 {
+	/**
+	 * @return Request
+	 */
 	public static function create()
 	{
 		return new self();
 	}
 
+	/**
+	 * @return string
+	 *
+	 * @throws \LogicException
+	 */
 	public function getEmail()
 	{
 		$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
@@ -18,6 +26,11 @@ class Request
 		return $email;
 	}
 
+	/**
+	 * @return string
+	 *
+	 * @throws \LogicException
+	 */
 	public function getPassword()
 	{
 		$password = filter_input(INPUT_POST, 'password');

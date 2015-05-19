@@ -17,6 +17,10 @@ abstract class Dao
 	 */
 	protected $queryFactory;
 
+	/**
+	 * @param ExtendedPdo  $pdo
+	 * @param QueryFactory $queryFactory
+	 */
 	public function __construct(ExtendedPdo $pdo, QueryFactory $queryFactory)
 	{
 		$this->pdo          = $pdo;

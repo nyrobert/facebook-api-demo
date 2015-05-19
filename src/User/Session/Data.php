@@ -19,6 +19,13 @@ class Data
 	 */
 	public $picture;
 
+	/**
+	 * @param int    $id
+	 * @param string $email
+	 * @param string $picture
+	 *
+	 * @return Data
+	 */
 	public static function create($id, $email, $picture = null)
 	{
 		$object          = new self();

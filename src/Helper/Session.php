@@ -16,6 +16,11 @@ class Session
 		session_regenerate_id(true);
 	}
 
+	/**
+	 * @param string $key
+	 *
+	 * @return mixed
+	 */
 	public function get($key)
 	{
 		if (isset($_SESSION[$key])) {
@@ -24,11 +29,18 @@ class Session
 		return null;
 	}
 
+	/**
+	 * @param string $key
+	 * @param mixed  $value
+	 */
 	public function set($key, $value)
 	{
 		$_SESSION[$key] = $value;
 	}
 
+	/**
+	 * @param string $key
+	 */
 	public function remove($key)
 	{
 		if (isset($_SESSION[$key])) {

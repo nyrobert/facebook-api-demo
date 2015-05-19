@@ -19,6 +19,11 @@ class Data
 	 */
 	public $password;
 
+	/**
+	 * @param array $data
+	 *
+	 * @return Data
+	 */
 	public static function create($data)
 	{
 		$object           = new self();
