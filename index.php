@@ -20,6 +20,8 @@ $app = new \Slim\Slim(['view' => $view]);
 
 $userManager     = UserManager::create();
 $facebookManager = FacebookManager::create();
+$requestHelper   = new RequestHelper();
+$responseHelper  = ResponseHelper::create();
 
 $app->get('/', function () use ($app, $facebookManager) {
 	$user = (new \Demo\User\Session\Handler())->getData();
@@ -33,10 +35,7 @@ $app->get('/', function () use ($app, $facebookManager) {
 	$app->render('index.html.twig', $vars);
 })->name('index');
 
-$app->post('/register', function () use ($userManager) {
-	$requestHelper  = new RequestHelper();
-	$responseHelper = ResponseHelper::create();
-
+$app->post('/register', function () use ($userManager, $requestHelper, $responseHelper) {
 	try {
 		$userManager->register($requestHelper->getEmail(), $requestHelper->getPassword());
 
@@ -46,10 +45,7 @@ $app->post('/register', function () use ($userManager) {
 	}
 })->name('register');
 
-$app->post('/login', function () use ($userManager) {
-	$requestHelper  = new RequestHelper();
-	$responseHelper = ResponseHelper::create();
-
+$app->post('/login', function () use ($userManager, $requestHelper, $responseHelper) {
 	try {
 		$userManager->login($requestHelper->getEmail(), $requestHelper->getPassword());
 
@@ -59,9 +55,7 @@ $app->post('/login', function () use ($userManager) {
 	}
 })->name('login');
 
-$app->post('/logout', function () use ($userManager) {
-	$responseHelper = ResponseHelper::create();
-
+$app->post('/logout', function () use ($userManager, $responseHelper) {
 	try {
 		$userManager->logout();
 
@@ -71,9 +65,7 @@ $app->post('/logout', function () use ($userManager) {
 	}
 })->name('logout');
 
-$app->post('/facebook/login', function () use ($facebookManager) {
-	$responseHelper  = ResponseHelper::create();
-
+$app->post('/facebook/login', function () use ($facebookManager, $responseHelper) {
 	try {
 		$facebookManager->process();
 
@@ -85,9 +77,7 @@ $app->post('/facebook/login', function () use ($facebookManager) {
 	}
 })->name('facebookLogin');
 
-$app->post('/facebook/disconnect', function () use ($facebookManager) {
-	$responseHelper  = ResponseHelper::create();
-
+$app->post('/facebook/disconnect', function () use ($facebookManager, $responseHelper) {
 	try {
 		$facebookManager->disconnect();
 
