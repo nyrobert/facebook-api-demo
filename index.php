@@ -85,4 +85,18 @@ $app->post('/facebook/login', function () use ($facebookManager) {
 	}
 })->name('facebookLogin');
 
+$app->post('/facebook/disconnect', function () use ($facebookManager) {
+	$responseHelper  = ResponseHelper::create();
+
+	try {
+		$facebookManager->disconnect();
+
+		$responseHelper->setJsonSuccessResponse();
+	} catch (\Facebook\FacebookRequestException $e) {
+		$responseHelper->setJsonErrorResponse($e);
+	} catch (\Exception $e) {
+		$responseHelper->setJsonErrorResponse($e);
+	}
+})->name('facebookDisconnect');
+
 $app->run();

@@ -4,8 +4,6 @@ namespace Demo\Facebook;
 
 use Demo\User\Manager as UserManager;
 use Demo\User\Session\Handler as SessionHandler;
-use Facebook\FacebookJavaScriptLoginHelper;
-use Facebook\FacebookSession;
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator as PasswordGenerator;
 
 class Manager
@@ -26,11 +24,6 @@ class Manager
 	private $sessionHandler;
 
 	/**
-	 * @var FacebookJavaScriptLoginHelper
-	 */
-	private $facebookLoginHelper;
-
-	/**
 	 * @var Api
 	 */
 	private $facebookApi;
@@ -41,18 +34,16 @@ class Manager
 	private $passwordGenerator;
 
 	/**
-	 * @param Dao                           $dao
-	 * @param UserManager                   $userManager
-	 * @param SessionHandler                $sessionHandler
-	 * @param FacebookJavaScriptLoginHelper $facebookLoginHelper
-	 * @param Api                           $facebookApi
-	 * @param PasswordGenerator             $passwordGenerator
+	 * @param Dao               $dao
+	 * @param UserManager       $userManager
+	 * @param SessionHandler    $sessionHandler
+	 * @param Api               $facebookApi
+	 * @param PasswordGenerator $passwordGenerator
 	 */
 	public function __construct(
 		Dao $dao,
 		UserManager $userManager,
 		SessionHandler $sessionHandler,
-		FacebookJavaScriptLoginHelper $facebookLoginHelper,
 		Api $facebookApi,
 		PasswordGenerator $passwordGenerator
 	)
@@ -60,7 +51,6 @@ class Manager
 		$this->dao                 = $dao;
 		$this->userManager         = $userManager;
 		$this->sessionHandler      = $sessionHandler;
-		$this->facebookLoginHelper = $facebookLoginHelper;
 		$this->facebookApi         = $facebookApi;
 		$this->passwordGenerator   = $passwordGenerator;
 	}
@@ -74,7 +64,6 @@ class Manager
 			Dao::create(),
 			UserManager::create(),
 			new SessionHandler(),
-			new FacebookJavaScriptLoginHelper(),
 			new Api(),
 			self::buildPasswordGenerator()
 		);
@@ -122,22 +111,9 @@ class Manager
 	 */
 	private function createData()
 	{
-		$session = $this->getSession();
-
 		return Data::create(
-			(string) $session->getAccessToken(), $this->facebookApi->getProfile($session)
+			$this->facebookApi->getAccessToken(), $this->facebookApi->getProfile()
 		);
-	}
-
-	/**
-	 * @return FacebookSession
-	 */
-	private function getSession()
-	{
-		$session = $this->facebookLoginHelper->getSession();
-		$session->validate();
-
-		return $session->getLongLivedSession();
 	}
 
 	/**
@@ -164,5 +140,18 @@ class Manager
 	public function isConnected($userId)
 	{
 		return $this->dao->isConnected($userId);
+	}
+
+	public function disconnect()
+	{
+		$user = $this->sessionHandler->getData();
+
+		if (!$user) {
+			throw new \LogicException('User not logged in!');
+		}
+
+		$this->facebookApi->revokeLogin();
+
+		$this->dao->delete($user->id);
 	}
 }

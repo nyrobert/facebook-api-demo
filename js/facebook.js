@@ -3,7 +3,9 @@
 define(['jquery', 'facebooksdk'], function($, FB) {
 	'use strict';
 
-	var loginButton = $('button.btn-facebook-login');
+	var defaultScope     = 'public_profile,email';
+	var loginButton      = $('button.btn-facebook-login');
+	var disconnectButton = $('button.btn-facebook-disconnect');
 
 	function init() {
 		FB.init({
@@ -13,21 +15,29 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 		});
 
 		loginButton.on('click', login);
+		disconnectButton.on('click', disconnect);
 	}
 
 	function login(event) {
-		event.preventDefault();
-		event.stopPropagation();
+		stopEvent(event);
 
 		FB.login(function(response) {
-			loginCallback(response);
-		}, {scope: 'public_profile,email'});
+			callback(loginButton.attr('data-login-url'), response);
+		}, {scope: defaultScope});
 	}
 
-	function loginCallback(response) {
+	function disconnect(event) {
+		stopEvent(event);
+
+		FB.login(function(response) {
+			callback(disconnectButton.attr('data-disconnect-url'), response);
+		}, {scope: defaultScope});
+	}
+
+	function callback(url, response) {
 		if (response.status === 'connected') {
 			$.ajax({
-				url:  loginButton.attr('data-login-url'),
+				url:  url,
 				type: 'POST'
 			}).done(function(data) {
 				if (data.success) {
@@ -49,6 +59,11 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 
 	function failure(errorMessage) {
 		alert(errorMessage);
+	}
+
+	function stopEvent(event) {
+		event.preventDefault();
+		event.stopPropagation();
 	}
 
 	return {

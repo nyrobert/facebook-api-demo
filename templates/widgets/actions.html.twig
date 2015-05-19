@@ -6,8 +6,12 @@
 		</div>
 		<div class="panel-footer">
 			{% if not isFacebookConnected %}
-				<button type="button" class="btn btn-primary btn-facebook-login" data-toggle="modal" data-login-url="{{ urlFor('facebookLogin') }}">
+				<button type="button" class="btn btn-primary btn-facebook-login" data-login-url="{{ urlFor('facebookLogin') }}">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Connect with Facebook
+				</button>
+			{% else %}
+				<button type="button" class="btn btn-warning btn-facebook-disconnect" data-disconnect-url="{{ urlFor('facebookDisconnect') }}">
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Disconnect Facebook
 				</button>
 			{% endif %}
 			<button type="button" class="btn btn-success btn-logout" data-action="{{ urlFor('logout') }}">

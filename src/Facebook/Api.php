@@ -2,6 +2,7 @@
 
 namespace Demo\Facebook;
 
+use Facebook\FacebookJavaScriptLoginHelper;
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
 use Facebook\GraphUser;
@@ -9,14 +10,50 @@ use Facebook\GraphUser;
 class Api
 {
 	/**
-	 * @param FacebookSession $session
-	 *
+	 * @var FacebookSession
+	 */
+	private static $session;
+
+	/**
+	 * @return string
+	 */
+	public function getAccessToken()
+	{
+		return (string) self::getSession()->getAccessToken();
+	}
+
+	/**
 	 * @return GraphUser
 	 */
-	public function getProfile(FacebookSession $session)
+	public function getProfile()
 	{
 		return (new FacebookRequest(
-			$session, 'GET', '/me?fields=id,email,picture{url}'
+			self::getSession(), 'GET', '/me?fields=id,email,picture{url}'
 		))->execute()->getGraphObject(GraphUser::className());
+	}
+
+	public function revokeLogin()
+	{
+		return (new FacebookRequest(
+			self::getSession(), 'DELETE', '/me/permissions'
+		))->execute();
+	}
+
+	/**
+	 * @return FacebookSession
+	 */
+	private static function getSession()
+	{
+		if (!self::$session) {
+			$session = (new FacebookJavaScriptLoginHelper())->getSession();
+			$session->validate();
+
+			$longLivedAccessToken = $session->getAccessToken()->extend();
+
+			self::$session = new FacebookSession(
+				$longLivedAccessToken, $session->getSignedRequest()
+			);
+		}
+		return self::$session;
 	}
 }
