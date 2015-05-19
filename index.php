@@ -3,7 +3,7 @@
 require 'vendor/autoload.php';
 
 use Demo\User\Manager as UserManager;
-use Demo\Facebook\Connect as FacebookConnect;
+use Demo\Facebook\Manager as FacebookManager;
 use Demo\Helper\Request as RequestHelper;
 use Demo\Helper\Response as ResponseHelper;
 
@@ -16,17 +16,21 @@ use Demo\Helper\Response as ResponseHelper;
 $view = new \Slim\Views\Twig();
 $view->parserExtensions = [new \Slim\Views\TwigExtension()];
 
-$app         = new \Slim\Slim(['view' => $view]);
-$userManager = UserManager::create();
+$app = new \Slim\Slim(['view' => $view]);
 
-$app->get('/', function () use ($app) {
-	$app->render(
-		'index.html.twig',
-		[
-			'appId' => getenv('FACEBOOK_APP_ID'),
-			'user'  => (new \Demo\User\Session\Handler())->getData()
-		]
-	);
+$userManager     = UserManager::create();
+$facebookManager = FacebookManager::create();
+
+$app->get('/', function () use ($app, $facebookManager) {
+	$user = (new \Demo\User\Session\Handler())->getData();
+
+	$vars = [
+		'appId'               => getenv('FACEBOOK_APP_ID'),
+		'user'                => $user,
+		'isFacebookConnected' => $user ? $facebookManager->isConnected($user->id) : false,
+	];
+
+	$app->render('index.html.twig', $vars);
 })->name('index');
 
 $app->post('/register', function () use ($userManager) {
@@ -67,12 +71,11 @@ $app->post('/logout', function () use ($userManager) {
 	}
 })->name('logout');
 
-$app->post('/facebook/connect', function () {
+$app->post('/facebook/login', function () use ($facebookManager) {
 	$responseHelper  = ResponseHelper::create();
-	$facebookManager = FacebookConnect::create();
 
 	try {
-		$facebookManager->connect();
+		$facebookManager->process();
 
 		$responseHelper->setJsonSuccessResponse();
 	} catch (\Facebook\FacebookRequestException $e) {
@@ -80,6 +83,6 @@ $app->post('/facebook/connect', function () {
 	} catch (\Exception $e) {
 		$responseHelper->setJsonErrorResponse($e);
 	}
-})->name('facebookConnect');
+})->name('facebookLogin');
 
 $app->run();

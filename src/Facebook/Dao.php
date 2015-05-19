@@ -4,7 +4,11 @@ namespace Demo\Facebook;
 
 class Dao extends \Demo\Dao
 {
-	public function save($userId, \Demo\Facebook\Data $data)
+	/**
+	 * @param int  $userId
+	 * @param Data $data
+	 */
+	public function save($userId, Data $data)
 	{
 		$insert = $this->queryFactory->newInsert();
 
@@ -24,5 +28,22 @@ class Dao extends \Demo\Dao
 
 		$query = $this->pdo->prepare((string) $insert);
 		$query->execute($insert->getBindValues());
+	}
+
+	/**
+	 * @param int $userId
+	 *
+	 * @return bool
+	 */
+	public function isConnected($userId)
+	{
+		$select = $this->queryFactory->newSelect();
+
+		$select
+			->cols(['1'])
+			->from('user_facebook')
+			->where('user_id = :userId');
+
+		return (bool) $this->pdo->fetchValue((string) $select, ['userId' => $userId]);
 	}
 }

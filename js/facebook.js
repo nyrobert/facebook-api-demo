@@ -12,10 +12,10 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 			version: 'v2.3'
 		});
 
-		loginButton.on('click', connect);
+		loginButton.on('click', login);
 	}
 
-	function connect(event) {
+	function login(event) {
 		event.preventDefault();
 		event.stopPropagation();
 
@@ -27,7 +27,7 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 	function loginCallback(response) {
 		if (response.status === 'connected') {
 			$.ajax({
-				url:  loginButton.attr('data-connect-url'),
+				url:  loginButton.attr('data-login-url'),
 				type: 'POST'
 			}).done(function(data) {
 				if (data.success) {

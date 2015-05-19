@@ -5,9 +5,11 @@
 			<span>Logged in as <strong>{{ user.email }}</strong></span>
 		</div>
 		<div class="panel-footer">
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".edit-post-modal">
-				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Connect with Facebook
-			</button>
+			{% if not isFacebookConnected %}
+				<button type="button" class="btn btn-primary btn-facebook-login" data-toggle="modal" data-login-url="{{ urlFor('facebookLogin') }}">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Connect with Facebook
+				</button>
+			{% endif %}
 			<button type="button" class="btn btn-success btn-logout" data-action="{{ urlFor('logout') }}">
 				<span class="glyphicon glyphicon-off" aria-hidden="true"></span> Logout
 			</button>

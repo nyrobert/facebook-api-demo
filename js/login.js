@@ -52,10 +52,6 @@ define(['jquery', 'bootstrap'], function($) {
 		});
 	}
 
-	function hide() {
-		loginOverlay.modal('hide');
-	}
-
 	function stopEvent(event) {
 		event.preventDefault();
 		event.stopPropagation();
@@ -70,7 +66,6 @@ define(['jquery', 'bootstrap'], function($) {
 	}
 
 	return {
-		init: init,
-		hide: hide
+		init: init
 	};
 });

@@ -2,7 +2,6 @@
 
 namespace Demo\Facebook;
 
-use Facebook\FacebookSession;
 use Facebook\GraphUser;
 
 class Data
@@ -23,10 +22,16 @@ class Data
 	public $email;
 
 	/**
-	 * @var string
+	 * @var string facebook profile picture
 	 */
 	public $picture;
 
+	/**
+	 * @param string    $accessToken
+	 * @param GraphUser $profileData
+	 *
+	 * @return Data
+	 */
 	public static function create($accessToken, GraphUser $profileData)
 	{
 		$data = new self();
