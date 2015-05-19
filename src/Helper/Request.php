@@ -39,4 +39,18 @@ class Request
 		}
 		return $password;
 	}
+
+	/**
+	 * @return string
+	 *
+	 * @throws \LogicException
+	 */
+	public function getFacebookSignedRequest()
+	{
+		$signedRequest = filter_input(INPUT_POST, 'signed_request');
+		if (!$signedRequest) {
+			throw new \LogicException('Empty signed request!');
+		}
+		return $signedRequest;
+	}
 }

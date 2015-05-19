@@ -62,4 +62,20 @@ class Dao extends \Demo\Dao
 		$query = $this->pdo->prepare((string) $delete);
 		$query->execute($delete->getBindValues());
 	}
+
+	/**
+	 * @param int $facebookUserId
+	 */
+	public function deleteWithFacebookUserId($facebookUserId)
+	{
+		$delete = $this->queryFactory->newDelete();
+
+		$delete
+			->from('user_facebook')
+			->where('facebook_user_id = :facebookUserId')
+			->bindValue('facebookUserId', $facebookUserId);
+
+		$query = $this->pdo->prepare((string) $delete);
+		$query->execute($delete->getBindValues());
+	}
 }

@@ -154,4 +154,50 @@ class Manager
 
 		$this->dao->delete($user->id);
 	}
+
+	/**
+	 * @param string $signedRequest
+	 * @param string $appSecret
+	 */
+	public function uninstall($signedRequest, $appSecret)
+	{
+		$data = $this->parseSignedRequest($signedRequest, $appSecret);
+
+		$this->dao->deleteWithFacebookUserId($data['user_id']);
+	}
+
+	/**
+	 * @param string $signedRequest
+	 * @param string $appSecret
+	 *
+	 * @return array
+	 *
+	 * @throws \LogicException
+	 */
+	private function parseSignedRequest($signedRequest, $appSecret)
+	{
+		list($encodedSignature, $payload) = explode('.', $signedRequest, 2);
+
+		// decode the data
+		$signature = $this->base64UrlDecode($encodedSignature);
+		$data      = json_decode($this->base64UrlDecode($payload), true);
+
+		// confirm the signature
+		$expectedSignature = hash_hmac('sha256', $payload, $appSecret, true);
+		if ($signature !== $expectedSignature) {
+			throw new \LogicException('Bad Signed JSON signature!');
+		}
+
+		return $data;
+	}
+
+	/**
+	 * @param string $input
+	 *
+	 * @return string
+	 */
+	private function base64UrlDecode($input)
+	{
+		return base64_decode(strtr($input, '-_', '+/'));
+	}
 }
