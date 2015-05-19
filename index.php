@@ -2,11 +2,6 @@
 
 require 'vendor/autoload.php';
 
-use Demo\User\Manager as UserManager;
-use Demo\Facebook\Manager as FacebookManager;
-use Demo\Helper\Request as RequestHelper;
-use Demo\Helper\Response as ResponseHelper;
-
 (new \Demo\Helper\Session())->start();
 
 \Facebook\FacebookSession::setDefaultApplication(
@@ -18,10 +13,10 @@ $view->parserExtensions = [new \Slim\Views\TwigExtension()];
 
 $app = new \Slim\Slim(['view' => $view]);
 
-$userManager     = UserManager::create();
-$facebookManager = FacebookManager::create();
-$requestHelper   = new RequestHelper();
-$responseHelper  = ResponseHelper::create();
+$userManager     = \Demo\User\Manager::create();
+$facebookManager = \Demo\Facebook\Manager::create();
+$requestHelper   = \Demo\Helper\Request::create();
+$responseHelper  = \Demo\Helper\Response::create();
 
 $app->get('/', function () use ($app, $facebookManager) {
 	$user = (new \Demo\User\Session\Handler())->getData();

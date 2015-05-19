@@ -4,6 +4,11 @@ namespace Demo\Helper;
 
 class Request
 {
+	public static function create()
+	{
+		return new self();
+	}
+
 	public function getEmail()
 	{
 		$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
