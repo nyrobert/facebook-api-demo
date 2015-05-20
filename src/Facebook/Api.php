@@ -46,7 +46,7 @@ class Api
 	{
 		if (!self::$session) {
 			$session = (new FacebookJavaScriptLoginHelper())->getSession();
-			$session->validate();
+			$session->getAccessToken()->isValid();
 
 			self::$session = new FacebookSession(
 				$session->getAccessToken()->extend(), $session->getSignedRequest()
