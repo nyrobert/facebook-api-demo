@@ -87,7 +87,7 @@ $app->post('/facebook/disconnect', function () use ($facebookManager, $responseH
 $app->post('/facebook/uninstall', function () use ($facebookManager, $requestHelper) {
 	try {
 		$facebookManager->uninstall(
-			$requestHelper->getFacebookSignedRequest(), getenv('FACEBOOK_APP_SECRET')
+			$requestHelper->getFacebookSignedRequest()
 		);
 	} catch (\Exception $e) {
 		echo 'Error: '.$e->getMessage();

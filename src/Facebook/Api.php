@@ -6,6 +6,7 @@ use Facebook\FacebookJavaScriptLoginHelper;
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
 use Facebook\GraphUser;
+use Facebook\Entities\SignedRequest;
 
 class Api
 {
@@ -53,5 +54,15 @@ class Api
 			);
 		}
 		return self::$session;
+	}
+
+	/**
+	 * @param string $rawSignedRequest
+	 *
+	 * @return SignedRequest
+	 */
+	public static function getSignedRequest($rawSignedRequest)
+	{
+		return new SignedRequest($rawSignedRequest);
 	}
 }
