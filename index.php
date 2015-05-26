@@ -13,10 +13,10 @@ $view->parserExtensions = [new \Slim\Views\TwigExtension()];
 
 $app = new \Slim\Slim(['view' => $view]);
 
-$container = new \Pimple\Container();
+$container = \Demo\Container::create(new \Pimple\Container());
 
-$userManager     = \Demo\User\Manager::create();
 $facebookManager = \Demo\Container::getFacebookManager($container);
+$userManager     = \Demo\User\Manager::create();
 $requestHelper   = \Demo\Helper\Request::create();
 $responseHelper  = \Demo\Helper\Response::create();
 
