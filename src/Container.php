@@ -2,47 +2,20 @@
 
 namespace Demo;
 
-use Pimple\Container as Pimple;
+use Pimple\Container as PimpleContainer;
 
 class Container
 {
-	/**
-	 * @var Container
-	 */
-	private static $instance;
+	const FACEBOOK_MANAGER = 'facebookManager';
 
 	/**
-	 * @var Pimple
-	 */
-	private $pimple;
-
-	/**
-	 * @param Pimple $pimple
-	 */
-	public function __construct(Pimple $pimple)
-	{
-		$this->pimple = $pimple;
-	}
-
-	/**
-	 * @return Container
-	 */
-	public static function getInstance()
-	{
-		if (!self::$instance) {
-			self::$instance = new self(
-				new Pimple()
-			);
-		}
-		return self::$instance;
-	}
-
-	/**
+	 * @param PimpleContainer $container
+	 *
 	 * @return \Demo\Facebook\Manager
 	 */
-	public function getFacebookManager()
+	public static function getFacebookManager(PimpleContainer $container)
 	{
-		$this->pimple['facebookManager'] = function () {
+		$container[self::FACEBOOK_MANAGER] = function () {
 			return new \Demo\Facebook\Manager(
 				\Demo\Facebook\Dao::create(),
 				\Demo\User\Manager::create(),
@@ -57,6 +30,6 @@ class Container
 			);
 		};
 
-		return $this->pimple['facebookManager'];
+		return $container[self::FACEBOOK_MANAGER];
 	}
 }
