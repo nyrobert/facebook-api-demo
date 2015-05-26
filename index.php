@@ -14,7 +14,7 @@ $view->parserExtensions = [new \Slim\Views\TwigExtension()];
 $app = new \Slim\Slim(['view' => $view]);
 
 $userManager     = \Demo\User\Manager::create();
-$facebookManager = \Demo\Facebook\Manager::create();
+$facebookManager = \Demo\Container::getInstance()->getFacebookManager();
 $requestHelper   = \Demo\Helper\Request::create();
 $responseHelper  = \Demo\Helper\Response::create();
 

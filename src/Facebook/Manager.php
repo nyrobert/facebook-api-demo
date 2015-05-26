@@ -48,38 +48,11 @@ class Manager
 		PasswordGenerator $passwordGenerator
 	)
 	{
-		$this->dao                 = $dao;
-		$this->userManager         = $userManager;
-		$this->sessionHandler      = $sessionHandler;
-		$this->facebookApi         = $facebookApi;
-		$this->passwordGenerator   = $passwordGenerator;
-	}
-
-	/**
-	 * @return Manager
-	 */
-	public static function create()
-	{
-		return new self(
-			Dao::create(),
-			UserManager::create(),
-			new SessionHandler(),
-			new Api(),
-			self::buildPasswordGenerator()
-		);
-	}
-
-	/**
-	 * @return PasswordGenerator
-	 */
-	private static function buildPasswordGenerator()
-	{
-		return (new PasswordGenerator())
-			->setUppercase()
-			->setLowercase()
-			->setNumbers()
-			->setSymbols(false)
-			->setLength(20);
+		$this->dao               = $dao;
+		$this->userManager       = $userManager;
+		$this->sessionHandler    = $sessionHandler;
+		$this->facebookApi       = $facebookApi;
+		$this->passwordGenerator = $passwordGenerator;
 	}
 
 	public function process()
