@@ -63,18 +63,7 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 
 	function callback(type, url, requiredPermissions, response) {
 		if (response.status === 'connected') {
-			handleDeclinedPermissions(type, url, requiredPermissions);
-
-			$.ajax({
-				url:  url,
-				type: 'POST'
-			}).done(function(data) {
-				if (data.success) {
-					success();
-				} else {
-					failure(data.errorMessage);
-				}
-			});
+			handleDeclinedPermissions(type, url, requiredPermissions, saveHandler);
 		} else if (response.status === 'not_authorized') {
 			failure('Please log into this app.');
 		} else {
@@ -82,7 +71,9 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 		}
 	}
 
-	function handleDeclinedPermissions(type, url, requiredPermissions) {
+	function handleDeclinedPermissions(
+		type, url, requiredPermissions, saveHandler
+	) {
 		FB.api('/me/permissions', function(response) {
 			var declinedPermissions = [];
 
@@ -95,7 +86,7 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 				}
 			});
 
-			if (declinedPermissions.length > 0) {
+			if (declinedPermissions.length) {
 				if (
 					confirm(
 						'The following permissions are required: ' +
@@ -104,6 +95,21 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 				) {
 					reAskPermission(type, url, declinedPermissions);
 				}
+			} else {
+				saveHandler(url);
+			}
+		});
+	}
+
+	function saveHandler(url) {
+		$.ajax({
+			url:  url,
+			type: 'POST'
+		}).done(function(data) {
+			if (data.success) {
+				success();
+			} else {
+				failure(data.errorMessage);
 			}
 		});
 	}
