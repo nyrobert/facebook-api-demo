@@ -3,7 +3,11 @@
 define(['jquery', 'facebooksdk'], function($, FB) {
 	'use strict';
 
-	var defaultScope     = 'public_profile,email';
+	var permissions = {
+		publicProfile: 'public_profile',
+		email:         'email'
+	};
+
 	var loginButton      = $('button.btn-facebook-login');
 	var disconnectButton = $('button.btn-facebook-disconnect');
 
@@ -21,21 +25,46 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 	function login(event) {
 		stopEvent(event);
 
+		var requiredPermissions = [permissions.publicProfile, permissions.email];
+
 		FB.login(function(response) {
-			callback(loginButton.attr('data-login-url'), response);
-		}, {scope: defaultScope});
+			callback(
+				'login',
+				loginButton.attr('data-login-url'),
+				requiredPermissions,
+				response
+			);
+		}, {scope: requiredPermissions.join(',')});
 	}
 
 	function disconnect(event) {
 		stopEvent(event);
 
+		var requiredPermissions = permissions.publicProfile;
+
 		FB.login(function(response) {
-			callback(disconnectButton.attr('data-disconnect-url'), response);
-		}, {scope: defaultScope});
+			callback(
+				'disconnect',
+				disconnectButton.attr('data-disconnect-url'),
+				requiredPermissions,
+				response
+			);
+		}, {scope: requiredPermissions});
 	}
 
-	function callback(url, response) {
+	function reAskPermission(type, url, declinedPermissions) {
+		FB.login(function(response) {
+			callback(type, url, declinedPermissions, response);
+		}, {
+			'scope':     declinedPermissions.join(','),
+			'auth_type': 'rerequest'
+		});
+	}
+
+	function callback(type, url, requiredPermissions, response) {
 		if (response.status === 'connected') {
+			handleDeclinedPermissions(type, url, requiredPermissions);
+
 			$.ajax({
 				url:  url,
 				type: 'POST'
@@ -51,6 +80,32 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 		} else {
 			failure('Please log into Facebook.');
 		}
+	}
+
+	function handleDeclinedPermissions(type, url, requiredPermissions) {
+		FB.api('/me/permissions', function(response) {
+			var declinedPermissions = [];
+
+			response.data.forEach(function(element) {
+				if (
+					requiredPermissions.indexOf(element.permission) > -1 &&
+					element.status === 'declined'
+				) {
+					declinedPermissions.push(element.permission);
+				}
+			});
+
+			if (declinedPermissions.length > 0) {
+				if (
+					confirm(
+						'The following permissions are required: ' +
+						declinedPermissions.join(',')
+					)
+				) {
+					reAskPermission(type, url, declinedPermissions);
+				}
+			}
+		});
 	}
 
 	function success() {
