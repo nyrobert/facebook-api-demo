@@ -23,7 +23,7 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 	}
 
 	function login(event) {
-		stopEvent(event);
+		event.preventDefault();
 
 		var requiredPermissions = [permissions.publicProfile, permissions.email];
 
@@ -38,7 +38,7 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 	}
 
 	function disconnect(event) {
-		stopEvent(event);
+		event.preventDefault();
 
 		var requiredPermissions = permissions.publicProfile;
 
@@ -120,11 +120,6 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 
 	function failure(errorMessage) {
 		alert(errorMessage);
-	}
-
-	function stopEvent(event) {
-		event.preventDefault();
-		event.stopPropagation();
 	}
 
 	return {

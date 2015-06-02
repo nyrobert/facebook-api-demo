@@ -14,7 +14,7 @@ define(['jquery', 'bootstrap'], function($) {
 	}
 
 	function login(event) {
-		stopEvent(event);
+		event.preventDefault();
 
 		if (!email.val() || !password.val()) {
 			return;
@@ -38,7 +38,7 @@ define(['jquery', 'bootstrap'], function($) {
 	}
 
 	function logout(event) {
-		stopEvent(event);
+		event.preventDefault();
 
 		$.ajax({
 			url:  logoutButton.attr('data-action'),
@@ -50,11 +50,6 @@ define(['jquery', 'bootstrap'], function($) {
 				failure(data.errorMessage);
 			}
 		});
-	}
-
-	function stopEvent(event) {
-		event.preventDefault();
-		event.stopPropagation();
 	}
 
 	function success() {

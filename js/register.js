@@ -13,7 +13,6 @@ define(['jquery', 'bootstrap'], function($) {
 
 	function register(event) {
 		event.preventDefault();
-		event.stopPropagation();
 
 		if (!email.val() || !password.val()) {
 			return;
