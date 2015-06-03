@@ -11,7 +11,7 @@
 
 1. Install Composer in the project directory
   
-  ```shell
+  ```shell 
   curl -sS https://getcomposer.org/installer | php
   ```
 2. Download PHP dependencies via Composer
