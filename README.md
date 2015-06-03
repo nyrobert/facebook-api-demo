@@ -3,8 +3,9 @@
 ## Requirements
 
 * [PHP](http://php.net) >=5.4
-* MySQL
+* [MySQL](http://www.mysql.com)
 * [Bower](http://bower.io)
+* [Facebook App](https://developers.facebook.com/apps)
 
 ## Installation
 
@@ -23,6 +24,14 @@
   ```shell
   bower install
   ```
+4. Set required environment variables
+
+  * `MYSQL_HOST`
+  * `MYSQL_USERNAME`
+  * `MYSQL_PASSWORD`
+  * `DB_NAME`
+  * `FACEBOOK_APP_ID`
+  * `FACEBOOK_APP_SECRET`
 
 ## License
 
