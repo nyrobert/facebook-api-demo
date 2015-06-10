@@ -39,8 +39,8 @@
 * Login
 * Login or register with Facebook
 * Connect / disconnect already registered user with Facebook
-* Extend and store access token (for further usage in the server side)
 * Login with the JavaScript SDK, API calls with PHP SDK
+* Extend and store access token (for further usage in the server side)
 * Re-asking for declined permissions
 * App uninstall (with deauthorize callback)
 
