@@ -33,6 +33,18 @@
   * `FACEBOOK_APP_ID`
   * `FACEBOOK_APP_SECRET`
 
+## Features
+
+* Registration
+* Login
+* Login or register with Facebook
+* Connect already registered user with Facebook
+* Disconnect user from Facebook
+* App uninstall (with deauthorize callback)
+* Extend and store access token (for further usage in the server side)
+* Login with the JavaScript SDK, API calls with PHP SDK
+* Re-asking for declined permissions
+
 ## License
 
 This project is licensed under the terms of the [MIT License (MIT)](LICENSE).
