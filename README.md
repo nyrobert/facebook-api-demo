@@ -33,20 +33,24 @@
   * `FACEBOOK_APP_ID`
   * `FACEBOOK_APP_SECRET`
 
+5. Import database schema
+
+  ```sql
+  mysql -u MYSQL_USERNAME -p DB_NAME < sql/schema.sql
+  ```
+
 ## Features
 
 This demo app was built for testing the latest Facebook API features, best
 practices and recommendations. The app has standard login and registration
 primarily for basic users. The app also offers login and registration for
-Facebook users too. In this case a basic users will be created in the background
+Facebook users too. In this case a basic user will be created in the background
 (with generated password). The app has Facebook connect feature which could be
 useful for basic users. The login happens on the client side with JavaScript
 SDK and re-asks for declined permissions. The server (PHP SDK) makes direct
 calls to Graph API with long-term access token (offline posting). The app
 uninstall on Facebook (with deauthorize callback) was also implemented in this
 app.
-
-*
 
 ## License
 
