@@ -35,7 +35,7 @@
 
 5. Import database schema
 
-  ```sql
+  ```shell
   mysql -u MYSQL_USERNAME -p DB_NAME < sql/schema.sql
   ```
 
