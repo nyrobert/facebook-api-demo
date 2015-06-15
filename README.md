@@ -1,4 +1,4 @@
-# Facebook API demo
+# Facebook API demo [![Build Status](https://travis-ci.org/nyrobert/facebook-api-demo.svg?branch=master)](https://travis-ci.org/nyrobert/facebook-api-demo)
 
 ## Requirements
 
