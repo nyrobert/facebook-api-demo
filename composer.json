@@ -1,6 +1,8 @@
 {
 	"autoload": {
-		"psr-4": {"Demo\\": "src/"}
+		"psr-4": {
+			"Demo\\": "src/"
+		}
 	},
 	"require": {
 		"php": ">=5.4.0",
@@ -12,5 +14,8 @@
 		"facebook/php-sdk-v4": "4.0.*",
 		"hackzilla/password-generator": "~1.0",
 		"pimple/pimple": "~3.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "4.7.*"
 	}
 }

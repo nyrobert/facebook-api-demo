@@ -52,6 +52,14 @@ calls to Graph API with long-term access token (offline posting). The app
 uninstall on Facebook (with deauthorize callback) was also implemented in this
 app.
 
+## Testing
+
+Run PHPUnit from the command line
+
+ ```shell
+  vendor/bin/phpunit
+  ```
+
 ## License
 
 This project is licensed under the terms of the [MIT License (MIT)](LICENSE).

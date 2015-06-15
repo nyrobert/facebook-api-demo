@@ -1,0 +1,10 @@
+<phpunit
+	bootstrap="vendor/autoload.php"
+	verbose="true"
+	colors="true">
+	<testsuites>
+		<testsuite name="facebook-api-demo">
+			<directory>tests</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>

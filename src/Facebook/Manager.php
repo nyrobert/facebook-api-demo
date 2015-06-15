@@ -6,6 +6,9 @@ use Demo\User\Manager as UserManager;
 use Demo\User\Session\Handler as SessionHandler;
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator as PasswordGenerator;
 
+/**
+ * @see \Test\Demo\Facebook\ManagerTest
+ */
 class Manager
 {
 	/**
@@ -85,7 +88,8 @@ class Manager
 	private function createData()
 	{
 		return Data::create(
-			$this->facebookApi->getAccessToken(), $this->facebookApi->getProfile()
+			$this->facebookApi->getAccessToken(),
+			$this->facebookApi->getProfile()
 		);
 	}
 
