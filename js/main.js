@@ -16,10 +16,13 @@ require.config({
 	}
 });
 
-require(['register', 'login', 'facebook'], function(register, login, facebook) {
+require(
+	['register', 'login', 'facebook', 'statusUpdate'],
+	function(register, login, facebook, statusUpdate) {
 	'use strict';
 
 	register.init();
 	login.init();
 	facebook.init();
+	statusUpdate.init();
 });
