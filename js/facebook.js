@@ -4,12 +4,14 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 	'use strict';
 
 	var permissions = {
-		publicProfile: 'public_profile',
-		email:         'email'
+		publicProfile:  'public_profile',
+		email:          'email',
+		publishActions: 'publish_actions'
 	};
 
-	var loginButton      = $('button.btn-facebook-login');
-	var disconnectButton = $('button.btn-facebook-disconnect');
+	var loginButton           = $('button.btn-facebook-login');
+	var disconnectButton      = $('button.btn-facebook-disconnect');
+	var statusUpdateContainer = $('.status-update');
 
 	function init() {
 		FB.init({
@@ -20,6 +22,8 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 
 		loginButton.on('click', login);
 		disconnectButton.on('click', disconnect);
+		statusUpdateContainer.find('.btn-status-update')
+			.on('click', statusUpdate);
 	}
 
 	function login(event) {
@@ -31,6 +35,25 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 			callback(
 				'login',
 				loginButton.attr('data-login-url'),
+				requiredPermissions,
+				response
+			);
+		}, {scope: requiredPermissions.join(',')});
+	}
+
+	function statusUpdate(event) {
+		event.preventDefault();
+
+		var requiredPermissions = [
+			permissions.publicProfile,
+			permissions.email,
+			permissions.publishActions
+		];
+
+		FB.login(function(response) {
+			callback(
+				'statusUpdate',
+				statusUpdateContainer.attr('action'),
 				requiredPermissions,
 				response
 			);
@@ -96,26 +119,30 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 					reAskPermission(type, url, declinedPermissions);
 				}
 			} else {
-				saveHandler(url);
+				saveHandler(type, url);
 			}
 		});
 	}
 
-	function saveHandler(url) {
+	function saveHandler(type, url) {
 		$.ajax({
 			url:  url,
 			type: 'POST'
 		}).done(function(data) {
 			if (data.success) {
-				success();
+				success(type);
 			} else {
 				failure(data.errorMessage);
 			}
 		});
 	}
 
-	function success() {
-		location.reload();
+	function success(type) {
+		if (type === 'statusUpdate') {
+			alert('Success.');
+		} else {
+			location.reload();
+		}
 	}
 
 	function failure(errorMessage) {
