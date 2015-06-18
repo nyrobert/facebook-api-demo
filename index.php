@@ -96,8 +96,10 @@ $app->post('/facebook/uninstall', function () use ($facebookManager, $requestHel
 	}
 });
 
-$app->post('/status/update', function () use ($responseHelper) {
+$app->post('/status/update', function () use ($facebookManager, $requestHelper, $responseHelper) {
 	try {
+		$facebookManager->statusUpdate($requestHelper->getStatus());
+
 		$responseHelper->setJsonSuccessResponse();
 	} catch (\Exception $e) {
 		$responseHelper->setJsonErrorResponse($e);

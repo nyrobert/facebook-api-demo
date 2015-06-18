@@ -132,6 +132,11 @@ class Manager
 		$this->dao->delete($user->id);
 	}
 
+	public function statusUpdate()
+	{
+		
+	}
+
 	/**
 	 * @param string $rawSignedRequest
 	 */

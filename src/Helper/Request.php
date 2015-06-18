@@ -45,6 +45,20 @@ class Request
 	 *
 	 * @throws \LogicException
 	 */
+	public function getStatus()
+	{
+		$status = filter_input(INPUT_POST, 'status');
+		if (!$status) {
+			throw new \LogicException('Empty status message!');
+		}
+		return $status;
+	}
+
+	/**
+	 * @return string
+	 *
+	 * @throws \LogicException
+	 */
 	public function getFacebookSignedRequest()
 	{
 		$signedRequest = filter_input(INPUT_POST, 'signed_request');

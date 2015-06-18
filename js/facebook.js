@@ -32,28 +32,9 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 		var requiredPermissions = [permissions.publicProfile, permissions.email];
 
 		FB.login(function(response) {
-			callback(
+			loginCallback(
 				'login',
 				loginButton.attr('data-login-url'),
-				requiredPermissions,
-				response
-			);
-		}, {scope: requiredPermissions.join(',')});
-	}
-
-	function statusUpdate(event) {
-		event.preventDefault();
-
-		var requiredPermissions = [
-			permissions.publicProfile,
-			permissions.email,
-			permissions.publishActions
-		];
-
-		FB.login(function(response) {
-			callback(
-				'statusUpdate',
-				statusUpdateContainer.attr('action'),
 				requiredPermissions,
 				response
 			);
@@ -66,7 +47,7 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 		var requiredPermissions = permissions.publicProfile;
 
 		FB.login(function(response) {
-			callback(
+			loginCallback(
 				'disconnect',
 				disconnectButton.attr('data-disconnect-url'),
 				requiredPermissions,
@@ -75,16 +56,35 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 		}, {scope: requiredPermissions});
 	}
 
+	function statusUpdate(event) {
+		event.preventDefault();
+
+		var requiredPermissions = [
+			permissions.publicProfile,
+			permissions.email,
+			permissions.publishActions
+		];
+
+		FB.login(function(response) {
+			loginCallback(
+				'statusUpdate',
+				statusUpdateContainer.attr('action'),
+				requiredPermissions,
+				response
+			);
+		}, {scope: requiredPermissions.join(',')});
+	}
+
 	function reAskPermission(type, url, declinedPermissions) {
 		FB.login(function(response) {
-			callback(type, url, declinedPermissions, response);
+			loginCallback(type, url, declinedPermissions, response);
 		}, {
 			'scope':     declinedPermissions.join(','),
 			'auth_type': 'rerequest'
 		});
 	}
 
-	function callback(type, url, requiredPermissions, response) {
+	function loginCallback(type, url, requiredPermissions, response) {
 		if (response.status === 'connected') {
 			handleDeclinedPermissions(type, url, requiredPermissions, saveHandler);
 		} else if (response.status === 'not_authorized') {
@@ -125,24 +125,37 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 	}
 
 	function saveHandler(type, url) {
-		$.ajax({
-			url:  url,
-			type: 'POST'
-		}).done(function(data) {
-			if (data.success) {
-				success(type);
-			} else {
-				failure(data.errorMessage);
-			}
-		});
+		if (type === 'statusUpdate') {
+			$.ajax({
+				url:      url,
+				type:     'POST',
+				dataType: 'json',
+				data: {
+					status: statusUpdateContainer.find('input[type="text"]').val()
+				}
+			}).done(function(data) {
+				if (data.success) {
+					alert('Success.');
+				} else {
+					failure(data.errorMessage);
+				}
+			});
+		} else {
+			$.ajax({
+				url:  url,
+				type: 'POST'
+			}).done(function(data) {
+				if (data.success) {
+					success();
+				} else {
+					failure(data.errorMessage);
+				}
+			});
+		}
 	}
 
-	function success(type) {
-		if (type === 'statusUpdate') {
-			alert('Success.');
-		} else {
-			location.reload();
-		}
+	function success() {
+		location.reload();
 	}
 
 	function failure(errorMessage) {
