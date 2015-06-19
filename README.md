@@ -29,14 +29,13 @@
   * `MYSQL_HOST`
   * `MYSQL_USERNAME`
   * `MYSQL_PASSWORD`
-  * `DB_NAME`
   * `FACEBOOK_APP_ID`
   * `FACEBOOK_APP_SECRET`
 
 5. Import database schema
 
   ```shell
-  mysql -u MYSQL_USERNAME -p DB_NAME < sql/schema.sql
+  mysql -u MYSQL_USERNAME -p < sql/schema.sql
   ```
 
 ## Features

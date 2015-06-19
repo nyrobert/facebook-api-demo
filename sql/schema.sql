@@ -1,3 +1,7 @@
+CREATE DATABASE `facebook_api_demo` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+USE `facebook_api_demo`;
+
 CREATE TABLE `user` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(100) COLLATE utf8_unicode_ci NOT NULL,
