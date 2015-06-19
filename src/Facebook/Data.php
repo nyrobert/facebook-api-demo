@@ -42,4 +42,20 @@ class Data
 
 		return $data;
 	}
+
+	/**
+	 * @param array $array
+	 *
+	 * @return Data
+	 */
+	public static function createWithArray(array $array)
+	{
+		$data = new self();
+		$data->accessToken = $array['access_token'];
+		$data->userId      = $array['facebook_user_id'];
+		$data->email       = $array['email'];
+		$data->picture     = $array['profile_picture'];
+
+		return $data;
+	}
 }

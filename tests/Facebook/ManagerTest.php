@@ -119,7 +119,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 			->expects($this->once())
 			->method('save');
 
-		$this->object->process();
+		$actual = $this->object->process();
+
+		$this->assertEquals(self::USER_ID, $actual);
 	}
 
 	public function testProcessWithRegisteredUser()
@@ -159,7 +161,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 			->expects($this->once())
 			->method('save');
 
-		$this->object->process();
+		$actual = $this->object->process();
+
+		$this->assertEquals(self::USER_ID, $actual);
 	}
 
 	public function testProcessWithLoggedInUser()
@@ -198,7 +202,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 			->expects($this->once())
 			->method('save');
 
-		$this->object->process();
+		$actual = $this->object->process();
+
+		$this->assertEquals(self::USER_ID, $actual);
 	}
 
 	private function createFacebookProfileData()

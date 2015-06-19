@@ -6,6 +6,7 @@ use Facebook\FacebookJavaScriptLoginHelper;
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
 use Facebook\GraphUser;
+use Facebook\GraphObject;
 use Facebook\Entities\SignedRequest;
 
 class Api
@@ -31,6 +32,21 @@ class Api
 		return (new FacebookRequest(
 			self::getSession(), 'GET', '/me?fields=id,email,picture{url}'
 		))->execute()->getGraphObject(GraphUser::className());
+	}
+
+	/**
+	 * @param string $message
+	 *
+	 * @return GraphObject
+	 */
+	public function statusUpdate($message)
+	{
+		(new FacebookRequest(
+			self::getSession(),
+			'POST',
+			'/me/feed',
+			['message' => $message]
+		))->execute()->getGraphObject();
 	}
 
 	public function revokeLogin()

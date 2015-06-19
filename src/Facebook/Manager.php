@@ -58,6 +58,9 @@ class Manager
 		$this->passwordGenerator = $passwordGenerator;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function process()
 	{
 		$data = $this->createData();
@@ -80,6 +83,8 @@ class Manager
 		}
 
 		$this->dao->save($userId, $data);
+
+		return $userId;
 	}
 
 	/**
@@ -132,9 +137,16 @@ class Manager
 		$this->dao->delete($user->id);
 	}
 
-	public function statusUpdate()
+	/**
+	 * @param string $message
+	 */
+	public function statusUpdate($message)
 	{
-		
+		$userId = $this->process();
+
+		$data = Data::createWithArray($this->dao->get($userId));
+
+		$this->facebookApi->statusUpdate($message);
 	}
 
 	/**

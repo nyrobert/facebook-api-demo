@@ -30,6 +30,24 @@ class Dao extends \Demo\Dao
 		$query->execute($insert->getBindValues());
 	}
 
+	public function get($userId)
+	{
+		$select = $this->queryFactory->newSelect();
+
+		$select
+			->cols([
+				'uf.access_token',
+				'uf.facebook_user_id',
+				'uf.profile_picture',
+				'u.email',
+			])
+			->from('user_facebook uf')
+			->join('INNER', 'user u', 'u.id = uf.user_id')
+			->where('uf.user_id = :userId');
+
+		return $this->pdo->fetchOne((string) $select, ['userId' => $userId]);
+	}
+
 	/**
 	 * @param int $userId
 	 *

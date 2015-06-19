@@ -131,7 +131,7 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 				type:     'POST',
 				dataType: 'json',
 				data: {
-					status: statusUpdateContainer.find('input[type="text"]').val()
+					message: statusUpdateContainer.find('input[type="text"]').val()
 				}
 			}).done(function(data) {
 				if (data.success) {

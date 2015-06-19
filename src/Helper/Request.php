@@ -45,13 +45,13 @@ class Request
 	 *
 	 * @throws \LogicException
 	 */
-	public function getStatus()
+	public function getMessage()
 	{
-		$status = filter_input(INPUT_POST, 'status');
-		if (!$status) {
+		$message = filter_input(INPUT_POST, 'message');
+		if (!$message) {
 			throw new \LogicException('Empty status message!');
 		}
-		return $status;
+		return $message;
 	}
 
 	/**
