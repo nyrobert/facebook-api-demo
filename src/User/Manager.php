@@ -46,7 +46,8 @@ class Manager
 	public function register($email, $password)
 	{
 		return $this->dao->register(
-			$email, password_hash($password, PASSWORD_DEFAULT)
+			$email,
+			password_hash($password, PASSWORD_DEFAULT)
 		);
 	}
 

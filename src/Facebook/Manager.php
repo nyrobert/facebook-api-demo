@@ -49,8 +49,7 @@ class Manager
 		SessionHandler $sessionHandler,
 		Api $facebookApi,
 		PasswordGenerator $passwordGenerator
-	)
-	{
+	) {
 		$this->dao               = $dao;
 		$this->userManager       = $userManager;
 		$this->sessionHandler    = $sessionHandler;
@@ -70,7 +69,8 @@ class Manager
 		if (!$user) {
 			// register and login
 			$userId = $this->userManager->register(
-				$data->email, $this->passwordGenerator->generatePassword()
+				$data->email,
+				$this->passwordGenerator->generatePassword()
 			);
 			$this->userManager->loginCallback($userId, $data->email, $data->picture);
 		} elseif (get_class($user) === 'Demo\User\Data') {

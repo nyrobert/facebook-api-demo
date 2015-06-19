@@ -30,7 +30,9 @@ class Api
 	public function getProfile()
 	{
 		return (new FacebookRequest(
-			self::getSession(), 'GET', '/me?fields=id,email,picture{url}'
+			self::getSession(),
+			'GET',
+			'/me?fields=id,email,picture{url}'
 		))->execute()->getGraphObject(GraphUser::className());
 	}
 
@@ -53,7 +55,9 @@ class Api
 	public function revokeLogin()
 	{
 		return (new FacebookRequest(
-			self::getSession(), 'DELETE', '/me/permissions'
+			self::getSession(),
+			'DELETE',
+			'/me/permissions'
 		))->execute();
 	}
 
@@ -67,7 +71,8 @@ class Api
 			$session->getAccessToken()->isValid();
 
 			self::$session = new FacebookSession(
-				$session->getAccessToken()->extend(), $session->getSignedRequest()
+				$session->getAccessToken()->extend(),
+				$session->getSignedRequest()
 			);
 		}
 		return self::$session;
