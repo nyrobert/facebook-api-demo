@@ -146,7 +146,7 @@ class Manager
 
 		$data = Data::createWithArray($this->dao->get($userId));
 
-		$this->facebookApi->statusUpdate($message);
+		$this->facebookApi->statusUpdate($data->accessToken, $message);
 	}
 
 	/**

@@ -35,14 +35,15 @@ class Api
 	}
 
 	/**
+	 * @param string $accessToken
 	 * @param string $message
 	 *
 	 * @return GraphObject
 	 */
-	public function statusUpdate($message)
+	public function statusUpdate($accessToken, $message)
 	{
 		(new FacebookRequest(
-			self::getSession(),
+			self::getSessionWithAccessToken($accessToken),
 			'POST',
 			'/me/feed',
 			['message' => $message]
@@ -70,6 +71,19 @@ class Api
 			);
 		}
 		return self::$session;
+	}
+
+	/**
+	 * @param string $accessToken long-term access token
+	 *
+	 * @return FacebookSession
+	 */
+	private static function getSessionWithAccessToken($accessToken)
+	{
+		$session = new FacebookSession($accessToken);
+		$session->getAccessToken()->isValid();
+
+		return $session;
 	}
 
 	/**
