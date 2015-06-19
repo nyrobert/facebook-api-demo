@@ -126,15 +126,18 @@ define(['jquery', 'facebooksdk'], function($, FB) {
 
 	function saveHandler(type, url) {
 		if (type === 'statusUpdate') {
+			var message = statusUpdateContainer.find('input[type="text"]');
+
 			$.ajax({
 				url:      url,
 				type:     'POST',
 				dataType: 'json',
 				data: {
-					message: statusUpdateContainer.find('input[type="text"]').val()
+					message: message.val()
 				}
 			}).done(function(data) {
 				if (data.success) {
+					message.val('');
 					alert('Success.');
 				} else {
 					failure(data.errorMessage);
