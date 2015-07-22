@@ -9,22 +9,22 @@
 
 ## Installation
 
-1. Install Composer in the project directory
+1. Install Composer in the project directory:
   
   ```shell
   curl -sS https://getcomposer.org/installer | php
   ```
-2. Download PHP dependencies via Composer
+2. Download PHP dependencies via Composer:
   
   ```shell
   php composer.phar install
   ```
-3. Download front-end dependencies via Bower
+3. Download front-end dependencies via Bower:
 
   ```shell
   bower install
   ```
-4. Set required environment variables
+4. Set required environment variables:
 
   * `MYSQL_HOST`
   * `MYSQL_USERNAME`
@@ -32,7 +32,7 @@
   * `FACEBOOK_APP_ID`
   * `FACEBOOK_APP_SECRET`
 
-5. Import database schema
+5. Import database schema:
 
   ```shell
   mysql -u MYSQL_USERNAME -p < sql/schema.sql
@@ -53,7 +53,7 @@ in this app.
 
 ## Testing
 
-Run PHPUnit from the command line
+Run PHPUnit from the command line:
 
  ```shell
   vendor/bin/phpunit
