@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "hash": "c9978f5479d209e686bb9eabee6fe6ea",
+    "content-hash": "60dde0e371c63f11ba048d74a1f0b78b",
     "packages": [
         {
             "name": "aura/sql",
@@ -214,16 +215,16 @@
         },
         {
             "name": "pimple/pimple",
-            "version": "v3.0.1",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Pimple.git",
-                "reference": "3313af5935dbc560fab845b76a1ca351b47855af"
+                "reference": "a30f7d6e57565a2e1a316e1baf2a483f788b258a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/3313af5935dbc560fab845b76a1ca351b47855af",
-                "reference": "3313af5935dbc560fab845b76a1ca351b47855af",
+                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/a30f7d6e57565a2e1a316e1baf2a483f788b258a",
+                "reference": "a30f7d6e57565a2e1a316e1baf2a483f788b258a",
                 "shasum": ""
             },
             "require": {
@@ -250,13 +251,13 @@
                     "email": "fabien@symfony.com"
                 }
             ],
-            "description": "Pimple is a simple Dependency Injection Container for PHP 5.3",
+            "description": "Pimple, a simple Dependency Injection Container",
             "homepage": "http://pimple.sensiolabs.org",
             "keywords": [
                 "container",
                 "dependency injection"
             ],
-            "time": "2015-07-30 09:57:46"
+            "time": "2015-09-11 15:10:35"
         },
         {
             "name": "slim/slim",
@@ -359,25 +360,29 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.19.0",
+            "version": "v1.22.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "edbeaf43b0a606cdaadc32a11d2673614a377b90"
+                "reference": "79249fc8c9ff62e41e217e0c630e2e00bcadda6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/edbeaf43b0a606cdaadc32a11d2673614a377b90",
-                "reference": "edbeaf43b0a606cdaadc32a11d2673614a377b90",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/79249fc8c9ff62e41e217e0c630e2e00bcadda6a",
+                "reference": "79249fc8c9ff62e41e217e0c630e2e00bcadda6a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.7"
             },
+            "require-dev": {
+                "symfony/debug": "~2.7",
+                "symfony/phpunit-bridge": "~2.7"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.19-dev"
+                    "dev-master": "1.22-dev"
                 }
             },
             "autoload": {
@@ -412,7 +417,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-07-31 13:45:26"
+            "time": "2015-09-22 13:59:32"
         }
     ],
     "packages-dev": [
@@ -521,16 +526,16 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "v1.4.1",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "3132b1f44c7bf2ec4c7eb2d3cb78fdeca760d373"
+                "reference": "4745ded9307786b730d7a60df5cb5a6c43cf95f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/3132b1f44c7bf2ec4c7eb2d3cb78fdeca760d373",
-                "reference": "3132b1f44c7bf2ec4c7eb2d3cb78fdeca760d373",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/4745ded9307786b730d7a60df5cb5a6c43cf95f7",
+                "reference": "4745ded9307786b730d7a60df5cb5a6c43cf95f7",
                 "shasum": ""
             },
             "require": {
@@ -577,20 +582,20 @@
                 "spy",
                 "stub"
             ],
-            "time": "2015-04-27 22:15:08"
+            "time": "2015-08-13 10:07:40"
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "2.2.2",
+            "version": "2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "2d7c03c0e4e080901b8f33b2897b0577be18a13c"
+                "reference": "ef1ca6835468857944d5c3b48fa503d5554cff2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/2d7c03c0e4e080901b8f33b2897b0577be18a13c",
-                "reference": "2d7c03c0e4e080901b8f33b2897b0577be18a13c",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/ef1ca6835468857944d5c3b48fa503d5554cff2f",
+                "reference": "ef1ca6835468857944d5c3b48fa503d5554cff2f",
                 "shasum": ""
             },
             "require": {
@@ -639,7 +644,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-08-04 03:42:39"
+            "time": "2015-09-14 06:51:16"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -772,16 +777,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "1.4.3",
+            "version": "1.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "7a9b0969488c3c54fd62b4d504b3ec758fd005d9"
+                "reference": "3144ae21711fb6cac0b1ab4cbe63b75ce3d4e8da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/7a9b0969488c3c54fd62b4d504b3ec758fd005d9",
-                "reference": "7a9b0969488c3c54fd62b4d504b3ec758fd005d9",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/3144ae21711fb6cac0b1ab4cbe63b75ce3d4e8da",
+                "reference": "3144ae21711fb6cac0b1ab4cbe63b75ce3d4e8da",
                 "shasum": ""
             },
             "require": {
@@ -817,7 +822,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2015-06-19 03:43:16"
+            "time": "2015-09-15 10:49:45"
         },
         {
             "name": "phpunit/phpunit",
@@ -893,20 +898,20 @@
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.3.6",
+            "version": "2.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "18dfbcb81d05e2296c0bcddd4db96cade75e6f42"
+                "reference": "5e2645ad49d196e020b85598d7c97e482725786a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/18dfbcb81d05e2296c0bcddd4db96cade75e6f42",
-                "reference": "18dfbcb81d05e2296c0bcddd4db96cade75e6f42",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/5e2645ad49d196e020b85598d7c97e482725786a",
+                "reference": "5e2645ad49d196e020b85598d7c97e482725786a",
                 "shasum": ""
             },
             "require": {
-                "doctrine/instantiator": "~1.0,>=1.0.2",
+                "doctrine/instantiator": "^1.0.2",
                 "php": ">=5.3.3",
                 "phpunit/php-text-template": "~1.2",
                 "sebastian/exporter": "~1.2"
@@ -945,7 +950,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-07-10 06:54:24"
+            "time": "2015-08-19 09:14:08"
         },
         {
             "name": "sebastian/comparator",
@@ -1320,16 +1325,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.7.3",
+            "version": "v2.7.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Yaml.git",
-                "reference": "71340e996171474a53f3d29111d046be4ad8a0ff"
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "31cb2ad0155c95b88ee55fe12bc7ff92232c1770"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/71340e996171474a53f3d29111d046be4ad8a0ff",
-                "reference": "71340e996171474a53f3d29111d046be4ad8a0ff",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/31cb2ad0155c95b88ee55fe12bc7ff92232c1770",
+                "reference": "31cb2ad0155c95b88ee55fe12bc7ff92232c1770",
                 "shasum": ""
             },
             "require": {
@@ -1365,7 +1370,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-07-28 14:07:07"
+            "time": "2015-09-14 14:14:09"
         }
     ],
     "aliases": [],
